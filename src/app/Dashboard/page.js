@@ -22,17 +22,14 @@ export default function Dashboard(){
       };
     return(
         <PrivateRoute>
-          <main className={styles.main}>
-          <nav>
-        <Sidebar setOpcionSeleccionada={setOpcionSeleccionada} />
-        </nav>
-        <div className={styles.dashboard}>
+        <main className={styles.main}>
+          <Sidebar setOpcionSeleccionada={setOpcionSeleccionada} />
+          <div className={styles.dashboard}>
+          <div className={styles.content}>
+            {opcionSeleccionada && opciones[opcionSeleccionada]}
+          </div>
+          </div>
 
-            hola mundo
-        </div>
-        <div className={styles.content}>
-          {opcionSeleccionada && opciones[opcionSeleccionada]}
-        </div>
         </main>
         </PrivateRoute>
     )

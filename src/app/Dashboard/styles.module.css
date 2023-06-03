@@ -1,12 +1,16 @@
 
 .NavLogin{
-    width: 100vw;
+    width: 100vh;
 }
-
+.main{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
 .Sidebar{
     background-color: blue;
     width: 20vh;
-    height: 100vh;
+    height: 90vh;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
@@ -14,14 +18,16 @@
 }
 .dashboard{
     display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
 }
 /* styles.module.css */
 
 
 
 .userProfile{
-    width: 100vh;
-    height: 70px;
+    width: 100vw;
+    height: 10vh;
     background-color: aquamarine;
     display: flex;
     flex-direction: row;
