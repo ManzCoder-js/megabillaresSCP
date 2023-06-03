@@ -1,23 +1,38 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import jsQR from 'jsqr';
 
 const QrReader = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      const constraints = { video: true };
+    const startCamera = async () => {
+      try {
+        if (typeof navigator.mediaDevices === 'undefined' || typeof navigator.mediaDevices.getUserMedia !== 'function') {
+          throw new Error('getUserMedia is not supported');
+        }
 
-      navigator.mediaDevices.getUserMedia(constraints)
-        .then((stream) => {
-          videoRef.current.srcObject = stream;
-          videoRef.current.play();
-        })
-        .catch((error) => {
-          console.error('Error accessing camera:', error);
-        });
-    }
+        const constraints = { video: true, audio: false };
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
+
+        videoRef.current.srcObject = stream;
+        videoRef.current.play();
+      } catch (error) {
+        console.error('Error accessing camera:', error);
+        setErrorMessage('Failed to access camera');
+      }
+    };
+
+    startCamera();
+
+    return () => {
+      if (videoRef.current.srcObject) {
+        const stream = videoRef.current.srcObject;
+        const tracks = stream.getTracks();
+        tracks.forEach((track) => track.stop());
+      }
+    };
   }, []);
 
   const scanQRCode = () => {
@@ -38,6 +53,7 @@ const QrReader = () => {
 
   return (
     <div>
+      {errorMessage && <p>{errorMessage}</p>}
       <video ref={videoRef} />
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       <button onClick={scanQRCode}>Scan QR Code</button>
