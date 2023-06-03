@@ -1,3 +1,4 @@
+import styles from "../Dashboard/styles.module.css"
 
 const Sidebar = ({ setOpcionSeleccionada }) => {
     const handleOptionClick = (opcion) => {
@@ -5,7 +6,7 @@ const Sidebar = ({ setOpcionSeleccionada }) => {
     };
   
     return (
-      <aside >
+      <aside className={styles.Sidebar} >
         <button onClick={() => handleOptionClick('inventario')}>Inventario</button>
         <button onClick={() => handleOptionClick('calendario')}>Calendario</button>
         <button onClick={() => handleOptionClick('compras')}>Compras</button>

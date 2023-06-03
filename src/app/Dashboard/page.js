@@ -22,7 +22,10 @@ export default function Dashboard(){
       };
     return(
         <PrivateRoute>
+          <main className={styles.main}>
+          <nav>
         <Sidebar setOpcionSeleccionada={setOpcionSeleccionada} />
+        </nav>
         <div className={styles.dashboard}>
 
             hola mundo
@@ -30,6 +33,7 @@ export default function Dashboard(){
         <div className={styles.content}>
           {opcionSeleccionada && opciones[opcionSeleccionada]}
         </div>
+        </main>
         </PrivateRoute>
     )
 }
