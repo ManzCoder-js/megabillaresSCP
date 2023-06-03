@@ -1,10 +1,12 @@
-// NavLogin.jsx
 'use client'
 import { useContext } from 'react';
 import { AuthContext } from './auth-context';
 import { useRouter } from 'next/navigation';
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { auth, googleAuthProvider } from './Firebase';
+import styles from '../Dashboard/styles.module.css';
+import Image from 'next/image';
+import Link from 'next/link';
 
 function NavLogin() {
   const authContext = useContext(AuthContext);
@@ -14,10 +16,8 @@ function NavLogin() {
     signInWithPopup(auth, googleAuthProvider)
       .then((result) => {
         const user = result.user;
-        // Aquí puedes realizar acciones adicionales, como guardar el usuario en tu base de datos
-        authContext.setUser(user); // Guarda el usuario en el estado de AuthContext
+        authContext.setUser(user);
         router.replace('/Dashboard');
-        console.log(user);
       })
       .catch((error) => {
         console.log(error);
@@ -27,7 +27,7 @@ function NavLogin() {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        authContext.setUser(null); // Elimina el usuario del estado de AuthContext al cerrar sesión
+        authContext.setUser(null);
         router.replace('/');
       })
       .catch((error) => {
@@ -36,21 +36,20 @@ function NavLogin() {
   };
 
   return (
-    <nav>
-      <ul>
-        <li>
-          <a href="/">Inicio</a>
-        </li>
+    <nav className={styles.NavLogin}>
         {authContext && authContext.user ? (
-          <li>
-            <button onClick={handleLogout}>Cerrar sesión</button>
-          </li>
+            <div className={styles.userProfile}>
+              <Link href='/Dashboard'>
+                <div className={styles.profilePicture}>
+                  <Image priority width={70} height={70} src={authContext.user.photoURL} alt="Profile Picture" />
+                </div>
+              </Link>
+              <div className={styles.userName}>{authContext.user.displayName}</div>
+              <button className={styles.btn} onClick={handleLogout}>Cerrar sesión</button>
+            </div>
         ) : (
-          <li>
-            <button onClick={handleLoginWithGoogle}>Iniciar sesión con Google</button>
-          </li>
+            <button className={styles.btn}  onClick={handleLoginWithGoogle}>Iniciar sesión con Google</button>
         )}
-      </ul>
     </nav>
   );
 }
