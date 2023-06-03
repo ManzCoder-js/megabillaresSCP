@@ -8,6 +8,7 @@ import Calendario from "../components/Calendario";
 import Compras from "../components/Compras";
 import Ventas from "../components/Ventas";
 import Produccion from "../components/Produccion";
+import InventoryApp from "../components/Invent";
 
 
 export default function Dashboard(){
@@ -29,7 +30,7 @@ export default function Dashboard(){
             {opcionSeleccionada && opciones[opcionSeleccionada]}
           </div>
           </div>
-
+        <InventoryApp/>
         </main>
         </PrivateRoute>
     )
