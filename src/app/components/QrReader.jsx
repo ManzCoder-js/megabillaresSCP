@@ -12,8 +12,12 @@ const QrReader = () => {
         if (typeof navigator.mediaDevices === 'undefined' || typeof navigator.mediaDevices.getUserMedia !== 'function') {
           throw new Error('getUserMedia is not supported');
         }
-
-        const constraints = { video: true, audio: false };
+        const constraints = {
+            facingMode: 'environment',
+            video: true,
+            audio: false
+          };
+          
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
         videoRef.current.srcObject = stream;
