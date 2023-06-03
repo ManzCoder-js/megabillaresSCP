@@ -13,11 +13,11 @@ const QrReader = () => {
           throw new Error('getUserMedia is not supported');
         }
         const constraints = {
-            facingMode: 'environment',
-            video: true,
-            audio: false
-          };
-          
+          facingMode: 'environment',
+          video: true,
+          audio: false
+        };
+
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
         videoRef.current.srcObject = stream;
@@ -43,6 +43,10 @@ const QrReader = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d', { willReadFrequently: true });
+
+    // Establecer la resolución del lienzo para que coincida con la resolución de la cámara
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
 
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
