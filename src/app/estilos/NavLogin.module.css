@@ -30,7 +30,7 @@
   }
   
 .userName {
-  font-size: 35px;
+  
   text-shadow:  
   15px 15px 20px #000000,
   -15px -15px 20px #b53737;
@@ -41,13 +41,13 @@
 .btn {
   background-color: #f44336;
   color: rgb(33, 30, 30);
-  border: none;
   padding: 8px 8px;
-  border-radius: 4px;
+  border-radius: 20px;
   cursor: pointer;
   background: #e0e0e0;
-  box-shadow: 15px 15px 30px #978383,
-              -15px -15px 30px #ffffff;
+  box-shadow: inset  20px 20px 60px #978383,
+              inset -20px -20px 60px #ffffff,
+                      5px 17px 20px #978383;
 }
 
 .btn:hover {

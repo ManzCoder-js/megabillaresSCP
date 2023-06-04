@@ -19,6 +19,7 @@
 
 }
 .input input{
+    margin-right: 20px;
     height: 5vw;
     width: 20vw;
     border-radius: 10px;
@@ -36,6 +37,7 @@
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
+    border: #ffffff;
     margin: 1rem;
     padding: 1rem;
     border-radius: 50px;

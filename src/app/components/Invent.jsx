@@ -108,7 +108,6 @@ const InventoryApp = () => {
       />
       <button onClick={addNewItem}>Agregar</button>
       </div>
-      <ul>
         {inventory.map((item, index) => (
           <li key={index} className={styles.ItemCont}>
             <p>{item.name}</p>
@@ -119,7 +118,6 @@ const InventoryApp = () => {
             <button onClick={() => deleteItem(index)}>Eliminar</button>
           </li>
         ))}
-      </ul>
     </div>
   );
 };
