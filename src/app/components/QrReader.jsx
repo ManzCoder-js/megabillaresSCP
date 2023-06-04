@@ -6,16 +6,25 @@ const QRReader = () => {
   const canvasRef = useRef(null);
   const [scanning, setScanning] = useState(true);
   const [qrCodeData, setQRCodeData] = useState('');
-  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
 
+    const startCamera = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        video.play();
+      } catch (error) {
+        console.error('Failed to access the camera:', error);
+      }
+    };
+
     const scanQRCode = () => {
-      if (paused || !scanning) {
-        return; // Si está en pausa o no se está escaneando, no hacer nada
+      if (!scanning) {
+        return; // Si no se está escaneando, no hacer nada
       }
 
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -26,40 +35,35 @@ const QRReader = () => {
         console.log('QR Code:', code.data);
         setQRCodeData(code.data); // Guardar los datos del QR leído
         setScanning(false); // Detener el escaneo
-
-        // Detener la cámara
-        video.srcObject.getTracks().forEach((track) => track.stop());
       } else {
         console.log('No QR Code found.');
       }
     };
 
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then((stream) => {
-        video.srcObject = stream;
-        video.play();
+    const startScanning = async () => {
+      await startCamera();
+      setScanning(true);
+    };
 
-        const interval = setInterval(scanQRCode, 200); // Realiza la decodificación cada 200ms (ajusta el intervalo según tus necesidades)
+    startScanning(); // Iniciar el escaneo al montar el componente
 
-        return () => {
-          clearInterval(interval); // Limpiar el intervalo al desmontar el componente
-        };
-      })
-      .catch((error) => {
-        console.error('Error accessing camera:', error);
-      });
-  }, []);
+    const interval = setInterval(scanQRCode, 200); // Realiza la decodificación cada 200ms (ajusta el intervalo según tus necesidades)
 
-  const togglePause = () => {
-    setPaused((prevPaused) => !prevPaused); // Cambiar el estado de pausa
-  };
+    return () => {
+      clearInterval(interval); // Limpiar el intervalo al desmontar el componente
+      const stream = video.srcObject;
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop()); // Detener la cámara
+      }
+    };
+  }, []); // Eliminar 'scanning' como dependencia
 
   return (
     <div>
       <video ref={videoRef} width={640} height={480} />
       <canvas ref={canvasRef} width={640} height={480} style={{ display: 'none' }} />
       {qrCodeData && <h1>{qrCodeData}</h1>}
-      <button onClick={togglePause}>{paused ? 'Resume' : 'Pause'}</button>
+      <button onClick={() => setScanning(scanning)}>Toggle Scanning</button> {/* Agregar un botón para activar/desactivar el escaneo */}
     </div>
   );
 };
