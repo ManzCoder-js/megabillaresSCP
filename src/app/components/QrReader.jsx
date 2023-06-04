@@ -1,74 +1,67 @@
 import React, { useEffect, useRef, useState } from 'react';
 import jsQR from 'jsqr';
 
-const QrReader = () => {
+const QRReader = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [qrCodeData, setQrCodeData] = useState('');
+  const [scanning, setScanning] = useState(true);
+  const [qrCodeData, setQRCodeData] = useState('');
+  const [paused, setPaused] = useState(false);
 
   useEffect(() => {
-    const startCamera = async () => {
-      try {
-        if (typeof navigator.mediaDevices === 'undefined' || typeof navigator.mediaDevices.getUserMedia !== 'function') {
-          throw new Error('getUserMedia is not supported');
-        }
-        const constraints = {
-          facingMode: 'environment',
-          video: true,
-          audio: false
-        };
-
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-
-        videoRef.current.srcObject = stream;
-        videoRef.current.play();
-      } catch (error) {
-        console.error('Error accessing camera:', error);
-        setErrorMessage('Failed to access camera');
-      }
-    };
-
-    startCamera();
-
-    return () => {
-      if (videoRef.current.srcObject) {
-        const stream = videoRef.current.srcObject;
-        const tracks = stream.getTracks();
-        tracks.forEach((track) => track.stop());
-      }
-    };
-  }, []);
-
-  const scanQRCode = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d', { willReadFrequently: true });
+    const context = canvas.getContext('2d');
 
-    // Establecer la resolución del lienzo para que coincida con la resolución de la cámara
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+    const scanQRCode = () => {
+      if (paused || !scanning) {
+        return; // Si está en pausa o no se está escaneando, no hacer nada
+      }
 
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    const code = jsQR(imageData.data, imageData.width, imageData.height);
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      const code = jsQR(imageData.data, imageData.width, imageData.height);
 
-    if (code) {
-      setQrCodeData(code.data);
-    } else {
-      console.log('No QR Code found.');
-    }
+      if (code) {
+        console.log('QR Code:', code.data);
+        setQRCodeData(code.data); // Guardar los datos del QR leído
+        setScanning(false); // Detener el escaneo
+
+        // Detener la cámara
+        video.srcObject.getTracks().forEach((track) => track.stop());
+      } else {
+        console.log('No QR Code found.');
+      }
+    };
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((stream) => {
+        video.srcObject = stream;
+        video.play();
+
+        const interval = setInterval(scanQRCode, 200); // Realiza la decodificación cada 200ms (ajusta el intervalo según tus necesidades)
+
+        return () => {
+          clearInterval(interval); // Limpiar el intervalo al desmontar el componente
+        };
+      })
+      .catch((error) => {
+        console.error('Error accessing camera:', error);
+      });
+  }, []);
+
+  const togglePause = () => {
+    setPaused((prevPaused) => !prevPaused); // Cambiar el estado de pausa
   };
 
   return (
     <div>
-      {errorMessage && <p>{errorMessage}</p>}
-      <video ref={videoRef} autoPlay />
-      <canvas ref={canvasRef} style={{ display: 'none' }} />
-      <button onClick={scanQRCode}>Scan QR Code</button>
+      <video ref={videoRef} width={640} height={480} />
+      <canvas ref={canvasRef} width={640} height={480} style={{ display: 'none' }} />
       {qrCodeData && <h1>{qrCodeData}</h1>}
+      <button onClick={togglePause}>{paused ? 'Resume' : 'Pause'}</button>
     </div>
   );
 };
 
-export default QrReader;
+export default QRReader;
