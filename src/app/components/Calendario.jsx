@@ -7,7 +7,6 @@ const Calendario = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [activity, setActivity] = useState('');
   const [events, setEvents] = useState([]);
-  const [selectedEvent, setSelectedEvent] = useState(null);
 
   useEffect(() => {
     const storedEvents = JSON.parse(localStorage.getItem('events'));
@@ -20,17 +19,23 @@ const Calendario = () => {
     localStorage.setItem('events', JSON.stringify(events.map(event => ({ ...event, date: event.date.toISOString() }))));
   }, [events]);
 
+  useEffect(() => {
+    const filteredEvent = events.find(
+      (event) =>
+        event.date.getDate() === selectedDate.getDate() &&
+        event.date.getMonth() === selectedDate.getMonth() &&
+        event.date.getFullYear() === selectedDate.getFullYear()
+    );
+    if (filteredEvent) {
+      setActivity(filteredEvent.activity);
+    } else {
+      setActivity('');
+    }
+  }, [selectedDate, events]);
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
-
-    const selectedEvent = events.find(
-      (event) =>
-        event.date.getDate() === date.getDate() &&
-        event.date.getMonth() === date.getMonth() &&
-        event.date.getFullYear() === date.getFullYear()
-    );
-
-    setSelectedEvent(selectedEvent);
+    setActivity('');
   };
 
   const handleActivityChange = (e) => {
@@ -48,6 +53,12 @@ const Calendario = () => {
     };
 
     setEvents([...events, newEvent]);
+    setActivity('');
+  };
+
+  const handleDeleteEvent = (event) => {
+    const updatedEvents = events.filter((e) => e !== event);
+    setEvents(updatedEvents);
     setActivity('');
   };
 
@@ -71,24 +82,27 @@ const Calendario = () => {
     <div>
       <h1>Agenda</h1>
       <div>
-        <Calendar
-          onChange={handleDateChange}
-          value={selectedDate}
-          tileContent={tileContent}
-        />
-        <input
-          type="text"
-          placeholder="Actividad"
-          value={activity}
-          onChange={handleActivityChange}
-        />
+        <Calendar onChange={handleDateChange} value={selectedDate} tileContent={tileContent} />
+        <input type="text" placeholder="Actividad" value={activity} onChange={handleActivityChange} />
         <button onClick={handleAddActivity}>Agregar</button>
       </div>
-      {selectedEvent && (
+     
+      {selectedDate && (
         <div>
-          <h3>Detalles del Evento</h3>
-          <p>Fecha: {selectedEvent.date.toLocaleDateString()}</p>
-          <p>Actividad: {selectedEvent.activity}</p>
+          <h3>Eventos del Día</h3>
+          {events
+            .filter(
+              (event) =>
+                event.date.getDate() === selectedDate.getDate() &&
+                event.date.getMonth() === selectedDate.getMonth() &&
+                event.date.getFullYear() === selectedDate.getFullYear()
+            )
+            .map((event, index) => (
+              <div key={index}>
+                <p>{event.activity}</p>
+                <button onClick={() => handleDeleteEvent(event)}>Eliminar</button>
+              </div>
+            ))}
         </div>
       )}
     </div>
