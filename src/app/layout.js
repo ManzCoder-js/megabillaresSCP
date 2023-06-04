@@ -10,7 +10,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <AuthProvider>
-    <html lang="en">
+    <html lang="es">
       <body >
         <Nav/>
         {children}
