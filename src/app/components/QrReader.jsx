@@ -14,9 +14,9 @@ const QrReader = () => {
           throw new Error('getUserMedia is not supported');
         }
         const constraints = {
-          video: true,
-          audio: false
-        };
+            video: true,
+            audio: false
+          };
 
         const stream = await navigator.mediaDevices.getUserMedia(constraints);
 
@@ -62,9 +62,8 @@ const QrReader = () => {
   return (
     <div>
       {errorMessage && <p>{errorMessage}</p>}
-      <video ref={videoRef} autoPlay/>
+      <video ref={videoRef} autoPlay><button onClick={scanQRCode}>Scan QR Code</button></video>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
-      <button onClick={scanQRCode}>Scan QR Code</button>
       {qrCodeData && <h1>{qrCodeData}</h1>}
     </div>
   );
