@@ -7,11 +7,11 @@ const Sidebar = ({ setOpcionSeleccionada }) => {
   
     return (
       <aside className={styles.Sidebar} >
-        <button onClick={() => handleOptionClick('inventario')}>Inventario</button>
-        <button onClick={() => handleOptionClick('calendario')}>Calendario</button>
-        <button onClick={() => handleOptionClick('compras')}>Compras</button>
-        <button onClick={() => handleOptionClick('ventas')}>Ventas</button>
-        <button onClick={() => handleOptionClick('produccion')}>Producción</button>
+        <button className={styles.opcion} onClick={() => handleOptionClick('inventario')}>Inventario</button>
+        <button className={styles.opcion} onClick={() => handleOptionClick('calendario')}>Calendario</button>
+        <button className={styles.opcion} onClick={() => handleOptionClick('compras')}>Compras</button>
+        <button className={styles.opcion} onClick={() => handleOptionClick('ventas')}>Ventas</button>
+        <button className={styles.opcion} onClick={() => handleOptionClick('produccion')}>Producción</button>
       </aside>
     );
   };

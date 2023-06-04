@@ -1,12 +1,31 @@
 
 .Sidebar{
-    background-color: blue;
-    width: 20vh;
+    border-radius: 50px;
+    background: #ffffff;
+    box-shadow: inset 20px 20px 60px #978383,
+                inset -20px -20px 60px #ffffff;
+    width: 11rem;
     height: 90vh;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: 1rem;
+    margin-top: 1rem;
 }
 
-  
+.opcion{
+    height: 5rem;
+    border-radius: 30px;
+    width: 10rem;
+    background: #ffffff;
+    text-shadow: 15px 15px 9px #000000;
+    box-shadow: inset  20px 20px 60px #978383,
+                inset -20px -20px 60px #ffffff,
+                       5px 17px 20px #978383;
+   
+    
+
+
+}

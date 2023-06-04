@@ -41,7 +41,7 @@ function NavLogin() {
             <div className={styles.userProfile}>
               <Link href='/Dashboard'>
                 <div className={styles.profilePicture}>
-                  <Image priority width={70} height={70} src={authContext.user.photoURL} alt="Profile Picture" />
+                  <Image priority width={40} height={40} src={authContext.user.photoURL} alt="Profile Picture" />
                 </div>
               </Link>
               <div className={styles.userName}>{authContext.user.displayName}</div>

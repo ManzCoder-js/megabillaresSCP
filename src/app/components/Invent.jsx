@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import QRCode from 'qrcode';
+import styles from '../estilos/Inventario.module.css'
 
 const InventoryApp = () => {
   const [inventory, setInventory] = useState([]);
@@ -84,8 +85,9 @@ const InventoryApp = () => {
   };
 
   return (
-    <div>
+    <div className={styles.ContenedorInv}>
       <h1>Inventario</h1>
+      <div className={styles.input} >
       <input
         type="text"
         value={newItem.name}
@@ -105,9 +107,10 @@ const InventoryApp = () => {
         placeholder="Cantidad"
       />
       <button onClick={addNewItem}>Agregar</button>
+      </div>
       <ul>
         {inventory.map((item, index) => (
-          <li key={index}>
+          <li key={index} className={styles.ItemCont}>
             <p>{item.name}</p>
             <p>{item.category}</p>
             <p>{item.quantity}</p>

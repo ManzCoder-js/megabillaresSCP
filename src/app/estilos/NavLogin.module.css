@@ -1,37 +1,63 @@
 .userProfile{
-    width: 100vw;
-    height: 10vh;
-    background-color: aquamarine;
+    width: 96vw;
+    height: 6vh;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-evenly;
+    align-items: center;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border-radius: 50px;
+    background: #ffffff;
+    box-shadow: inset 20px 20px 60px #978383,
+                inset -20px -20px 60px #ffffff;
+               
 }
 
 .profilePicture {
-    width: 70px;
-    height: 70px;
+  position: absolute;
+  left: 60px;
+  top: 6px;
+  display: flex;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     overflow: hidden;
+    background: #e0e0e0;
+    box-shadow: 15px 15px 30px #978383,
+               -15px -15px 30px #ffffff;
   }
   
 .userName {
-  margin-left: 10px;
+  font-size: 35px;
+  text-shadow:  
+  15px 15px 20px #000000,
+  -15px -15px 20px #b53737;
+  display: flex;
+  align-items: center;
 }
 
 .btn {
   background-color: #f44336;
-  color: white;
+  color: rgb(33, 30, 30);
   border: none;
-  padding: 8px 16px;
+  padding: 8px 8px;
   border-radius: 4px;
   cursor: pointer;
+  background: #e0e0e0;
+  box-shadow: 15px 15px 30px #978383,
+              -15px -15px 30px #ffffff;
 }
 
 .btn:hover {
-  background-color: #d32f2f;
+  background-color: #9d8b8b;
+  transform: scale(1.08);
+    transition: transform .2s ease;
 }
 
 .btn:active {
-  background-color: #b71c1c;
-}
+    background-color: #ae5d5d;
+    box-shadow: 9px 9px 30px rgb(25, 25, 25),
+               -9px -9px 30px rgb(60, 60, 60);
+  }   
