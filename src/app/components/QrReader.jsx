@@ -62,7 +62,7 @@ const QrReader = () => {
   return (
     <div>
       {errorMessage && <p>{errorMessage}</p>}
-      <video ref={videoRef} />
+      <video ref={videoRef} autoPlay/>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       <button onClick={scanQRCode}>Scan QR Code</button>
     </div>
