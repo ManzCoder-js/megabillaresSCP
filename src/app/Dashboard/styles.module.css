@@ -65,3 +65,99 @@
 .content{
     color: #b71c1c;
 }
+
+
+
+
+/* Estilos para el componente de calendario */
+.calendarioContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.calendarioHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.calendarioMonth {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.calendarioCurrentDate {
+  font-size: 16px;
+  color: #777;
+}
+
+.calendarioDaysContainer {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.calendarioDay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.calendarioDay:hover {
+  background-color: #e6e6e6;
+}
+
+.calendarioSelectedDay {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.calendarioActivity {
+  margin-top: 20px;
+}
+
+.calendarioActivity input[type="text"] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.calendarioActivity button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.calendarioActivity button:hover {
+  background-color: #0056b3;
+}
+
+.calendarioNavigation {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.eventMarker {
+  width: 6px;
+  height: 6px;
+  background-color: red;
+  border-radius: 50%;
+}
