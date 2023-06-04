@@ -78,6 +78,7 @@ const QRReader = () => {
           <h1>{qrCodeData}</h1>
         </div>
       )}
+      <button onClick={toggleScanning}>{scanning ? 'Stop Scanning' : 'Start Scanning'}</button>
     </div>
   );
 };
