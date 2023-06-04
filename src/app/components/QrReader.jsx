@@ -6,6 +6,7 @@ const QRReader = () => {
   const canvasRef = useRef(null);
   const [scanning, setScanning] = useState(true);
   const [qrCodeData, setQRCodeData] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const video = videoRef.current;
@@ -18,7 +19,7 @@ const QRReader = () => {
         video.srcObject = stream;
         video.play();
       } catch (error) {
-        console.error('Failed to access the camera:', error);
+        setError('Failed to access the camera');
       }
     };
 
@@ -32,11 +33,10 @@ const QRReader = () => {
       const code = jsQR(imageData.data, imageData.width, imageData.height);
 
       if (code) {
-        console.log('QR Code:', code.data);
         setQRCodeData(code.data); // Guardar los datos del QR leído
         setScanning(false); // Detener el escaneo
       } else {
-        console.log('No QR Code found.');
+        setError('No QR Code found');
       }
     };
 
@@ -58,12 +58,24 @@ const QRReader = () => {
     };
   }, []); // Eliminar 'scanning' como dependencia
 
+  
+
+  const handleLoadedData = () => {
+    const canvas = canvasRef.current;
+    canvas.width = videoRef.current.videoWidth;
+    canvas.height = videoRef.current.videoHeight;
+  };
+
   return (
     <div>
-      <video ref={videoRef} width={640} height={480} />
-      <canvas ref={canvasRef} width={640} height={480} style={{ display: 'none' }} />
-      {qrCodeData && <h1>{qrCodeData}</h1>}
-      <button onClick={() => setScanning(false)}>Toggle Scanning</button> {/* Agregar un botón para activar/desactivar el escaneo */}
+      
+      <video ref={videoRef} width='100%' height='100%' onLoadedData={handleLoadedData} />
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
+      {qrCodeData && (
+        <div>
+          <h1>{qrCodeData}</h1>
+        </div>
+      )}
     </div>
   );
 };
