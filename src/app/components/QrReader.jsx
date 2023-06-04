@@ -58,7 +58,9 @@ const QRReader = () => {
     };
   }, []); // Eliminar 'scanning' como dependencia
 
-  
+  const toggleScanning = () => {
+    setScanning(!scanning);
+  };
 
   const handleLoadedData = () => {
     const canvas = canvasRef.current;
@@ -69,7 +71,7 @@ const QRReader = () => {
   return (
     <div>
       
-      <video ref={videoRef} width='100%' height='100%' onLoadedData={handleLoadedData} />
+      <video ref={videoRef} width='100%' height='100%' onLoadedData={handleLoadedData} autoPlay/>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       {qrCodeData && (
         <div>
