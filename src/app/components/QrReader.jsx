@@ -5,6 +5,7 @@ const QrReader = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState('');
+  const [qrCodeData, setQrCodeData] = useState('');
 
   useEffect(() => {
     const startCamera = async () => {
@@ -53,7 +54,7 @@ const QrReader = () => {
     const code = jsQR(imageData.data, imageData.width, imageData.height);
 
     if (code) {
-      console.log('QR Code:', code.data);
+      setQrCodeData(code.data);
     } else {
       console.log('No QR Code found.');
     }
@@ -65,6 +66,7 @@ const QrReader = () => {
       <video ref={videoRef} autoPlay/>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       <button onClick={scanQRCode}>Scan QR Code</button>
+      {qrCodeData && <h1>{qrCodeData}</h1>}
     </div>
   );
 };
