@@ -11,13 +11,13 @@ const Calendario = () => {
 
   useEffect(() => {
     const storedEvents = JSON.parse(localStorage.getItem('events'));
-    if (storedEvents) {
-      setEvents(storedEvents);
+    if (storedEvents && storedEvents.length > 0) {
+      setEvents(storedEvents.map(event => ({ ...event, date: new Date(event.date) })));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('events', JSON.stringify(events));
+    localStorage.setItem('events', JSON.stringify(events.map(event => ({ ...event, date: new Date(event.date).toISOString() }))));
   }, [events]);
 
   const handleDateChange = (date) => {
@@ -39,11 +39,11 @@ const Calendario = () => {
 
   const handleAddActivity = () => {
     if (!selectedDate || activity === '') {
-      return; // No permite agregar actividades sin fecha o descripción
+      return;
     }
 
     const newEvent = {
-      date: selectedDate,
+      date: selectedDate.toISOString(),
       activity: activity,
     };
 
@@ -54,9 +54,9 @@ const Calendario = () => {
   const isEventDate = (date) => {
     return events.some(
       (event) =>
-        event.date.getDate() === date.getDate() &&
-        event.date.getMonth() === date.getMonth() &&
-        event.date.getFullYear() === date.getFullYear()
+        new Date(event.date).getDate() === date.getDate() &&
+        new Date(event.date).getMonth() === date.getMonth() &&
+        new Date(event.date).getFullYear() === date.getFullYear()
     );
   };
 
@@ -87,7 +87,7 @@ const Calendario = () => {
       {selectedEvent && (
         <div>
           <h3>Detalles del Evento</h3>
-          <p>Fecha: {selectedEvent.date.toLocaleDateString()}</p>
+          <p>Fecha: {new Date(selectedEvent.date).toLocaleDateString()}</p>
           <p>Actividad: {selectedEvent.activity}</p>
         </div>
       )}
