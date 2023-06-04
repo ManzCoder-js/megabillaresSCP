@@ -15,7 +15,7 @@ const QRReader = () => {
 
     const startCamera = async () => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
         video.srcObject = stream;
         video.play();
       } catch (error) {
@@ -70,7 +70,6 @@ const QRReader = () => {
 
   return (
     <div>
-      
       <video ref={videoRef} width='100%' height='100%' onLoadedData={handleLoadedData} autoPlay/>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       {qrCodeData && (
