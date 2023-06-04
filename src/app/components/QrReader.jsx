@@ -63,7 +63,7 @@ const QRReader = () => {
       <video ref={videoRef} width={640} height={480} />
       <canvas ref={canvasRef} width={640} height={480} style={{ display: 'none' }} />
       {qrCodeData && <h1>{qrCodeData}</h1>}
-      <button onClick={() => setScanning(scanning)}>Toggle Scanning</button> {/* Agregar un botón para activar/desactivar el escaneo */}
+      <button onClick={() => setScanning(false)}>Toggle Scanning</button> {/* Agregar un botón para activar/desactivar el escaneo */}
     </div>
   );
 };
