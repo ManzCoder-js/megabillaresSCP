@@ -45,5 +45,23 @@
     background: #ffffff;
     box-shadow: inset 20px 20px 60px #978383,
                 inset -20px -20px 60px #ffffff;
-
+}
+.ItemCont p {
+    margin: .5rem;
+    padding: 1rem;
+    border-radius: 20px;
+    height: 90%;
+    display: inline-block; /* Cambiamos display a inline-block */
+    word-wrap: break-word; /* Agregamos word-wrap con valor break-word */
+    overflow-wrap: break-word; /* Agregamos overflow-wrap con valor break-word */
+    box-shadow: inset  20px 20px 60px #978383,
+    inset -20px -20px 60px #ffffff,
+           5px 17px 20px #978383;
+  }
+  
+.ItemCont button{
+    width: 20vw;
+}
+.QRCode{
+    width:0px ;
 }

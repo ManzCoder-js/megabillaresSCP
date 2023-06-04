@@ -81,7 +81,7 @@ const InventoryApp = () => {
       }
     }, [qrCodeValue]);
 
-    return <canvas ref={qrCodeRef} />;
+    return <canvas ref={qrCodeRef} width={100} height={100} />;
   };
 
   return (
@@ -110,12 +110,12 @@ const InventoryApp = () => {
       </div>
         {inventory.map((item, index) => (
           <li key={index} className={styles.ItemCont}>
-            <p>{item.name}</p>
-            <p>{item.category}</p>
-            <p>{item.quantity}</p>
+            <p>Material:<br/>{item.name}</p>
+            <p>Categoria:<br/>{item.category}</p>
+            <p>Cantidad:<br/>{item.quantity}</p>
             <QRCodeComponent qrCodeValue={`Item: ${item.name} Categoria: ${item.category}`} />
-            <p>{item.qrCode}</p>
             <button onClick={() => deleteItem(index)}>Eliminar</button>
+            
           </li>
         ))}
     </div>
