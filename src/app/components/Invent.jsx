@@ -12,6 +12,17 @@ const InventoryApp = () => {
   const canvasRefs = useRef([]);
 
   useEffect(() => {
+    const storedInventory = JSON.parse(localStorage.getItem('inventory'));
+    if (storedInventory) {
+      setInventory(storedInventory);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('inventory', JSON.stringify(inventory));
+  }, [inventory]);
+
+  useEffect(() => {
     inventory.forEach((item, index) => {
       generateQRCode(item.name, index);
     });

@@ -1,0 +1,14 @@
+
+.main{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.dashboard{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.content{
+    color: #b71c1c;
+}

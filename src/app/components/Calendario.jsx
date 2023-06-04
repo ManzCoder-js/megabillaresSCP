@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import styles from '../Dashboard/styles.module.css';
+import styles from '../estilos/Calendario.module.css';
 
 const Calendario = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -17,7 +17,7 @@ const Calendario = () => {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('events', JSON.stringify(events.map(event => ({ ...event, date: new Date(event.date).toISOString() }))));
+    localStorage.setItem('events', JSON.stringify(events.map(event => ({ ...event, date: event.date.toISOString() }))));
   }, [events]);
 
   const handleDateChange = (date) => {
@@ -43,7 +43,7 @@ const Calendario = () => {
     }
 
     const newEvent = {
-      date: selectedDate.toISOString(),
+      date: selectedDate,
       activity: activity,
     };
 
@@ -54,9 +54,9 @@ const Calendario = () => {
   const isEventDate = (date) => {
     return events.some(
       (event) =>
-        new Date(event.date).getDate() === date.getDate() &&
-        new Date(event.date).getMonth() === date.getMonth() &&
-        new Date(event.date).getFullYear() === date.getFullYear()
+        event.date.getDate() === date.getDate() &&
+        event.date.getMonth() === date.getMonth() &&
+        event.date.getFullYear() === date.getFullYear()
     );
   };
 
@@ -87,7 +87,7 @@ const Calendario = () => {
       {selectedEvent && (
         <div>
           <h3>Detalles del Evento</h3>
-          <p>Fecha: {new Date(selectedEvent.date).toLocaleDateString()}</p>
+          <p>Fecha: {selectedEvent.date.toLocaleDateString()}</p>
           <p>Actividad: {selectedEvent.activity}</p>
         </div>
       )}

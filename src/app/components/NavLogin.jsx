@@ -4,9 +4,9 @@ import { AuthContext } from './auth-context';
 import { useRouter } from 'next/navigation';
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { auth, googleAuthProvider } from './Firebase';
-import styles from '../Dashboard/styles.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
+import styles from '../estilos/NavLogin.module.css'
 
 function NavLogin() {
   const authContext = useContext(AuthContext);
@@ -36,7 +36,7 @@ function NavLogin() {
   };
 
   return (
-    <nav className={styles.NavLogin}>
+    <nav>
         {authContext && authContext.user ? (
             <div className={styles.userProfile}>
               <Link href='/Dashboard'>

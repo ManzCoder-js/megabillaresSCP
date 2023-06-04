@@ -1,7 +1,7 @@
 'use client'
 import Sidebar from "../components/BarraLateral";
 import PrivateRoute from "../components/PrivateRoute";
-import styles from "./styles.module.css"
+import styles from "../estilos/Dashboard.module.css"
 import React, { useState } from 'react';
 import Inventario from "../components/Inventario";
 import Calendario from "../components/Calendario";

@@ -1,4 +1,4 @@
-import styles from "../Dashboard/styles.module.css"
+import styles from "../estilos/Sidebar.module.css"
 
 const Sidebar = ({ setOpcionSeleccionada }) => {
     const handleOptionClick = (opcion) => {

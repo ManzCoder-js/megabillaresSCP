@@ -11,7 +11,7 @@ const QRReader = () => {
   useEffect(() => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext('2d',  { willReadFrequently: true });
 
     const startCamera = async () => {
       try {
@@ -29,7 +29,7 @@ const QRReader = () => {
       }
 
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height,);
       const code = jsQR(imageData.data, imageData.width, imageData.height);
 
       if (code) {
