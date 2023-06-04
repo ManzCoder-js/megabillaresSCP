@@ -23,9 +23,9 @@ export default function Dashboard(){
     return(
         <PrivateRoute>
         <main className={styles.main}>
-          <div className={styles.SideBar}>
+          
           <Sidebar setOpcionSeleccionada={setOpcionSeleccionada} />
-          </div>
+          
           <div className={styles.dashboard}>
           <div className={styles.content}>
             {opcionSeleccionada && opciones[opcionSeleccionada]}
