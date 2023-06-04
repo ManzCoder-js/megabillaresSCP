@@ -14,7 +14,6 @@ const QrReader = () => {
           throw new Error('getUserMedia is not supported');
         }
         const constraints = {
-          facingMode: 'environment',
           video: true,
           audio: false
         };
