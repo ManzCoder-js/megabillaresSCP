@@ -1,10 +1,9 @@
-
-.Sidebar{
+/* Estilos base */
+.Sidebar {
     border-radius: 50px;
     background: #ffffff;
-    box-shadow: inset 20px 20px 60px #978383,
-                inset -20px -20px 60px #ffffff;
-    width: 11rem;
+    box-shadow: inset 20px 20px 60px #978383, inset -20px -20px 60px #ffffff;
+    width: 20%;
     height: 90vh;
     display: flex;
     flex-direction: column;
@@ -13,21 +12,38 @@
     align-items: center;
     margin-left: 1rem;
     margin-top: 1rem;
-}
-
-.opcion{
+  }
+  
+  .opcion {
     height: 5rem;
     border-radius: 30px;
     width: 10rem;
     background: #ffffff;
     text-shadow: 15px 15px 9px #000000;
-    box-shadow: inset  20px 20px 60px #978383,
-                inset -20px -20px 60px #ffffff,
-                       5px 17px 20px #978383;
-
-}
-.opcion:hover {
+    box-shadow: inset 20px 20px 60px #978383, inset -20px -20px 60px #ffffff, 5px 17px 20px #978383;
+  }
+  
+  .opcion:hover {
     background-color: #9d8b8b;
     transform: scale(1.08);
-      transition: transform .2s ease;
+    transition: transform 0.2s ease;
   }
+  
+  /* Estilos responsive para dispositivos móviles */
+  @media (max-width: 768px) {
+    .Sidebar {
+      width: 12%;
+      height: 70%;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 1rem;
+    }
+  
+    .opcion {
+      height: 3rem;
+      width: 3rem;
+      margin: 0.5rem 0;
+    }
+  }
+  

@@ -1,7 +1,6 @@
 
 body {
-  width: 100vw;
-  overflow-x: hidden;
+  width: 100%;
   margin: 0;
   padding: 0;
   background-color: rgb(221, 221, 221);}

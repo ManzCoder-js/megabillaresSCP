@@ -1,38 +1,39 @@
-.ContenedorInv{
-    width: 76vw;
-    padding: 2rem;
-    margin: 1rem;
+/* Estilos base */
+.ContenedorInv {
+    width: 80%;
+    padding: 1rem;
+    margin: .3rem;
     border-radius: 50px;
     background: #ffffff;
-    box-shadow: inset 20px 20px 60px #978383,
-                inset -20px -20px 60px #ffffff;
-                justify-content: left;
-}
-
-.ContenedorInv h1 {
+    box-shadow: inset 20px 20px 60px #978383, inset -20px -20px 60px #ffffff;
+    justify-content: left;
+  }
+  
+  .ContenedorInv h1 {
     display: flex;
     justify-content: center;
-}
-.input {
+  }
+  
+  .input {
     display: flex;
     justify-content: center;
-
-}
-.input input{
+  }
+  
+  .input input {
     margin-right: 20px;
     height: 5vw;
-    width: 20vw;
+    width: 20%;
     border-radius: 10px;
     background: #ffffff;
-    box-shadow: inset 20px 20px 60px #978383,
-                inset -20px -20px 60px #ffffff;
-                text-shadow: 15px 15px 9px #000000;
-
-}
-.input input::placeholder{
+    box-shadow: inset 20px 20px 60px #978383, inset -20px -20px 60px #ffffff;
+    text-shadow: 15px 15px 9px #000000;
+  }
+  
+  .input input::placeholder {
     width: fit-content;
-}
-.ItemCont{
+  }
+  
+  .ItemCont {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -41,27 +42,65 @@
     margin: 1rem;
     padding: 1rem;
     border-radius: 50px;
-    width: 66vw;
+    width: 90%;
     background: #ffffff;
-    box-shadow: inset 20px 20px 60px #978383,
-                inset -20px -20px 60px #ffffff;
-}
-.ItemCont p {
-    margin: .5rem;
+    box-shadow: inset 20px 20px 60px #978383, inset -20px -20px 60px #ffffff;
+  }
+  
+  .ItemCont p {
+    margin: 0.5rem;
     padding: 1rem;
     border-radius: 20px;
     height: 90%;
-    display: inline-block; /* Cambiamos display a inline-block */
-    word-wrap: break-word; /* Agregamos word-wrap con valor break-word */
-    overflow-wrap: break-word; /* Agregamos overflow-wrap con valor break-word */
-    box-shadow: inset  20px 20px 60px #978383,
-    inset -20px -20px 60px #ffffff,
-           5px 17px 20px #978383;
+    display: inline-block;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    box-shadow: inset 20px 20px 60px #978383, inset -20px -20px 60px #ffffff, 5px 17px 20px #978383;
   }
   
-.ItemCont button{
+  .ItemCont button {
     width: 20vw;
-}
-.QRCode{
-    width:0px ;
-}
+  }
+  
+  .QRCode {
+    width: 0px;
+  }
+  
+  /* Estilos responsive para dispositivos móviles */
+  @media (max-width: 768px) {
+    .ContenedorInv {
+      width: 80%;
+    }
+  
+    .input input {
+      width: 95%;
+      border-radius: 10px;
+
+    }
+    .btnAgregar{
+        border-radius: 10px;
+    }
+    .input{
+        display: flex;
+        flex-direction: column;
+        
+    }
+  
+    .ItemCont {
+      width: 90%;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .ItemCont p {
+      margin: 0.5rem 0;
+      width: 80%;
+    }
+  
+    .ItemCont button {
+      width: 40vw;
+      margin-top: 1rem;
+      border-radius: 10px;
+    }
+  }
+  

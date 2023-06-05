@@ -106,7 +106,7 @@ const InventoryApp = () => {
         onChange={(e) => setNewItem({ ...newItem, quantity: parseInt(e.target.value) })}
         placeholder="Cantidad"
       />
-      <button onClick={addNewItem}>Agregar</button>
+      <button className={styles.btnAgregar} onClick={addNewItem}>Agregar</button>
       </div>
         {inventory.map((item, index) => (
           <li key={index} className={styles.ItemCont}>
