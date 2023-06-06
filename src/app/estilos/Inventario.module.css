@@ -4,10 +4,7 @@
     padding: 1rem;
     margin: 1rem;
     border-radius: 50px;
-    background: #ffffff;
-    box-shadow: inset 20px 20px 60px #978383, inset -20px -20px 60px #ffffff;
-    justify-content: left;
-  }
+    background-color: rgb(221, 221, 221)  }
   
   .ContenedorInv h1 {
     display: flex;
@@ -70,7 +67,7 @@
   @media (max-width: 768px) {
     .ContenedorInv {
       width: 90vw;
-      height: 90%;
+      height: 96%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -94,7 +91,7 @@
     }
   
     .ItemCont {
-      width: 100%;
+      width: 90%;
       height: 70%;
       flex-direction: column;
       align-items: flex-start;

@@ -20,6 +20,7 @@
         overflow: scroll;
         height: 92%;
         width: 100vw;
+        justify-content: center;
     }
   
     .content{

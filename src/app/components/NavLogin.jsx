@@ -36,7 +36,7 @@ function NavLogin() {
   };
 
   return (
-    <nav>
+    <nav className={styles.navLogin}>
         {authContext && authContext.user ? (
             <div className={styles.userProfile}>
               <Link href='/Dashboard'>
