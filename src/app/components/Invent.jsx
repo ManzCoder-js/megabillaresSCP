@@ -85,8 +85,8 @@ const InventoryApp = () => {
   };
 
   return (
-    <div className={styles.ContenedorInv}>
-      <h1>Inventario</h1>
+    
+      <div className={styles.invent}>
       <div className={styles.input} >
       <input
         type="text"
@@ -107,7 +107,10 @@ const InventoryApp = () => {
         placeholder="Cantidad"
       />
       <button className={styles.btnAgregar} onClick={addNewItem}>Agregar</button>
-      </div>
+    
+    </div>
+    <div className={styles.ContenedorInv}>
+      <div className={styles.ItemCard}>
         {inventory.map((item, index) => (
           <li key={index} className={styles.ItemCont}>
             <p>Material:<br/>{item.name}</p>
@@ -118,6 +121,8 @@ const InventoryApp = () => {
             
           </li>
         ))}
+      </div>
+    </div>
     </div>
   );
 };
