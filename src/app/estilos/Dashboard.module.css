@@ -4,12 +4,10 @@
     flex-direction: row;
     flex-wrap: nowrap;
 }
-.dashboard{
+.content{
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-}
-.content{
     color: #b71c1c;
     text-shadow: 15px 15px 9px #000000;
 
@@ -19,18 +17,12 @@
         display: flex;
         flex-direction: column-reverse;
         position: absolute;
-        bottom: 0px;
+        overflow: scroll;
+        height: 100%;
     }
-    .dashboard{
-        bottom: 0px;
-        height: 80%;
-        display: flex;
-        flex-direction: column-reverse;
-    }
+  
     .content{
-
-        height: 70%;
         display: flex;
-        flex-direction: column-reverse;
+        height: 90vh;
     }
 }

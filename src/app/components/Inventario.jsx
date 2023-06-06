@@ -4,7 +4,6 @@ export default function Inventario() {
     return(
        <div>
         <InventoryApp/>
-        <QrReader/>
        </div>
     )
 }

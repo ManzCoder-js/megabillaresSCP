@@ -26,10 +26,8 @@ export default function Dashboard(){
           
           <Sidebar setOpcionSeleccionada={setOpcionSeleccionada} />
           
-          <div className={styles.dashboard}>
           <div className={styles.content}>
             {opcionSeleccionada && opciones[opcionSeleccionada]}
-          </div>
           </div>
         </main>
         </PrivateRoute>
