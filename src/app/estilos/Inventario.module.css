@@ -1,8 +1,8 @@
 /* Estilos base */
 .ContenedorInv {
-    width: 80%;
+    width: 100%;
     padding: 1rem;
-    margin: .3rem;
+    margin: 1rem;
     border-radius: 50px;
     background: #ffffff;
     box-shadow: inset 20px 20px 60px #978383, inset -20px -20px 60px #ffffff;
@@ -69,7 +69,13 @@
   /* Estilos responsive para dispositivos móviles */
   @media (max-width: 768px) {
     .ContenedorInv {
-      width: 80%;
+      width: 90vw;
+      height: 78vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      margin:.5rem;
     }
   
     .input input {
@@ -88,8 +94,10 @@
   
     .ItemCont {
       width: 90%;
+      height: 70%;
       flex-direction: column;
       align-items: flex-start;
+      margin-left: .1rem;
     }
   
     .ItemCont p {

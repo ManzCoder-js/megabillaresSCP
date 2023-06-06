@@ -1,4 +1,5 @@
-
+'use client'
+import { useState } from "react";
 const Ventas = () => {
   const [poolTable, setPoolTable] = useState({
     size: '',
@@ -67,6 +68,3 @@ const Ventas = () => {
 
 export default Ventas
 
-       </div>
-    )
-}

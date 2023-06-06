@@ -14,4 +14,23 @@
     text-shadow: 15px 15px 9px #000000;
 
 }
+@media (max-width: 768px) {
+    .main{
+        display: flex;
+        flex-direction: column-reverse;
+        position: absolute;
+        bottom: 0px;
+    }
+    .dashboard{
+        bottom: 0px;
+        height: 80%;
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .content{
 
+        height: 70%;
+        display: flex;
+        flex-direction: column-reverse;
+    }
+}
