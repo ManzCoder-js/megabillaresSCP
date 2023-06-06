@@ -71,11 +71,11 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 99%;
+      width: 92vw;
     }
     .ContenedorInv {
-      width: 90vw;
       height: 90%;
+      width: 100vw;
       display: flex;
       justify-content: center;
       flex-direction: column;
