@@ -31,7 +31,6 @@
         justify-content: center;
         height: 90%;
         width: 100vw;
-        overflow: scroll;
         padding: .2rem;
     }
 }
