@@ -1,6 +1,7 @@
-html, boby {
- 
-  margin: 0;
+html, body {
+  width: 98vw;
+  margin: 0%;
+  padding: 0%;
 }
 
 nav{
