@@ -1,8 +1,6 @@
 /* Estilos base */
 .Sidebar {
     border-radius: 50px;
-    background: #ffffff;
-    box-shadow: inset 20px 20px 60px #978383, inset -20px -20px 60px #ffffff;
     width: 15%;
     height: 90vh;
     display: flex;
@@ -10,7 +8,8 @@
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
-    margin: 5px;
+    padding: 5px;
+    margin: 1rem;
   }
   
   .opcion {

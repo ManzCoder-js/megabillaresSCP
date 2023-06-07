@@ -113,9 +113,9 @@ const InventoryApp = () => {
       <div className={styles.ItemCard}>
         {inventory.map((item, index) => (
           <li key={index} className={styles.ItemCont}>
-            <p>Material:<br/>{item.name}</p>
-            <p>Categoria:<br/>{item.category}</p>
-            <p>Cantidad:<br/>{item.quantity}</p>
+            <p>Material:    {item.name}</p>
+            <p>Categoria:     {item.category}</p>
+            <p>Cantidad:    {item.quantity}</p>
             <QRCodeComponent qrCodeValue={`Item: ${item.name} Categoria: ${item.category}`} />
             <button onClick={() => deleteItem(index)}>Eliminar</button>
             
