@@ -12,5 +12,6 @@ nav{
   justify-content: center;
   align-items: center;
   margin: 8px;
+  position: relative;
 }
 
