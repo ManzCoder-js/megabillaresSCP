@@ -69,6 +69,8 @@
   
   .QRCode {
     width: 0px;
+    margin: 0%;
+    padding: 0%;
   }
   
   /* Estilos responsive para dispositivos móviles */
@@ -79,7 +81,7 @@
       align-items: center;
       justify-content: center;
       width: 90vw;
-      height: 90%;
+      height: 85%;
     }
     .ContenedorInv {
       height: 90%;
