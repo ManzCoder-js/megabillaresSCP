@@ -1,9 +1,9 @@
 /* Estilos base */
 .invent{
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
-  padding: 1rem;
+  padding: .5rem;
 }
 .ContenedorInv {
     width: 100%;
@@ -17,6 +17,7 @@
   .input {
     display: flex;
     justify-content: center;
+    height: 20%;
   }
   
   .input input {
@@ -30,7 +31,7 @@
   }
   
   .input input::placeholder {
-    width: fit-content;
+    width: 50%;
   }
   
   
@@ -69,6 +70,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       width: 90vw;
       height: 95%;
     }
@@ -78,6 +80,7 @@
       display: flex;
       flex-direction: column;
       overflow: scroll;
+      padding: .2rem;
     }
   
     .input input {
