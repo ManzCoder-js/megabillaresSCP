@@ -72,11 +72,11 @@
       align-items: center;
       justify-content: center;
       width: 90vw;
-      height: 95%;
+      height: 97%;
     }
     .ContenedorInv {
       height: 95%;
-      width: 93vw;
+      width: 100vw;
       display: flex;
       flex-direction: column;
       overflow: scroll;
