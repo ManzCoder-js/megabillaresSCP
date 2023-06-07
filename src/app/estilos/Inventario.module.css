@@ -79,7 +79,7 @@
       align-items: center;
       justify-content: center;
       width: 95vw;
-      height: 94%;
+      height: 99%;
     }
     .ContenedorInv {
       height: 100%;
@@ -119,7 +119,7 @@
       flex-direction: column;
       margin-left: 1rem;
       align-items: center;
-      height: 90vw;
+      height: 90%;
       width: 300px;
       border-radius: 50px;
       background-color: #978383;
