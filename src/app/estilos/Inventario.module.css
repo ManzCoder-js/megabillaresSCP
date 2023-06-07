@@ -48,9 +48,8 @@
   }
   
   .ItemCont p {
-    margin: 0.5rem;
-    padding: .3rem;
-    height: 90%;
+    margin: 0.3rem;
+    padding: .1rem;
     display: inline-block;
     word-wrap: break-word;
     overflow-wrap: break-word;
