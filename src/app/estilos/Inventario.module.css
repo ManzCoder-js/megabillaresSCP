@@ -84,7 +84,7 @@
       height: 85%;
     }
     .ContenedorInv {
-      height: 90%;
+      height: 100%;
       width: 100vw;
       display: flex;
       flex-direction: column-reverse;
@@ -121,7 +121,7 @@
       flex-direction: column;
       margin-left: 1rem;
       align-items: center;
-      height: 250px;
+      height: 350px;
       width: 300px;
       border-radius: 50px;
       background-color: #978383;
