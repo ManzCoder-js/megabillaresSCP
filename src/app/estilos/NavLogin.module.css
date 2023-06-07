@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     margin-left: 1rem;
     margin-right: 1rem;
@@ -17,8 +17,8 @@
 
 .profilePicture {
   position: absolute;
-  left: 1.5rem;
-  top: .4rem;
+  left: 2.7rem;
+  top: .5rem;
   display: flex;
     width: 40px;
     height: 40px;
@@ -39,6 +39,9 @@
 }
 
 .btn {
+  position: absolute;
+  right: 2.6rem;
+  top: .5rem;
   background-color: #f44336;
   color: rgb(33, 30, 30);
   padding: 8px 8px;
