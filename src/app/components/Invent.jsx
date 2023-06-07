@@ -118,7 +118,6 @@ const InventoryApp = () => {
             <p>Cantidad:    {item.quantity}</p>
             <QRCodeComponent qrCodeValue={`Item: ${item.name} Categoria: ${item.category}`} />
             <button onClick={() => deleteItem(index)}>Eliminar</button>
-            
           </li>
         ))}
       </div>
