@@ -1,13 +1,13 @@
 
 body {
   width: 100vw;
-  height: 100%;
+  height: 98%;
   margin: 0;
   padding: 0;
   background-color: rgb(221, 221, 221);
 }
 nav{
-  
+
   display: flex;
   justify-content: center;
   align-items: center;
