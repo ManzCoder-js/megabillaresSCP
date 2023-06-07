@@ -81,10 +81,10 @@
       align-items: center;
       justify-content: center;
       width: 90vw;
-      height: 86%;
+      height: 80%;
     }
     .ContenedorInv {
-      height: 340px;
+      height: 300px;
       width: 100vw;
       display: flex;
       flex-direction: column-reverse;
