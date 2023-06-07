@@ -84,9 +84,8 @@
     }
   
     .input input {
-      width: 95%;
+      width: 100%;
       border-radius: 10px;
-
     }
     .btnAgregar{
         border-radius: 10px;

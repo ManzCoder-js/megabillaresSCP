@@ -1,17 +1,14 @@
-
-body {
-  width: 100vw;
-  height: 100%;
+html, boby {
+ 
   margin: 0;
-  padding: 0;
-  background-color: rgb(221, 221, 221);
 }
+
 nav{
 
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 8px;
+  margin: 4px;
   position: relative;
 }
 
