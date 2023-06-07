@@ -23,14 +23,15 @@
         flex-direction: column-reverse;
         position: absolute;
         width: 100vw;
-        height: 89%;
+        height: 98%;
     }
   
     .content{
         display: flex;
         justify-content: center;
-        height: 93%;
+        height: 100%;
         width: 100vw;
-        padding: .3rem;
+        overflow: scroll;
+        padding: .2rem;
     }
 }
