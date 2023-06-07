@@ -21,6 +21,7 @@
     .main {
     display: flex;
     flex-direction: column-reverse;
+    position: relative;
     width: 100vw;
     height: 90%;
     }
