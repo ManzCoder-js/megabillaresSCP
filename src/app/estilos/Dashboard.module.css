@@ -18,14 +18,14 @@
         flex-direction: column-reverse;
         position: absolute;
         overflow: scroll;
-        width: 100%;
+        width: 100vw;
         height: 90%;
         justify-content: center;
     }
   
     .content{
         display: flex;
-        height: 190vw;
+        height: 99vh;
         overflow: scroll;
         flex-direction: column-reverse;
     }
