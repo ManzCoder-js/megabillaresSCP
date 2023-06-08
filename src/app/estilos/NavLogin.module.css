@@ -1,11 +1,12 @@
 .navLogin{
-  width: 90vw;
+  width: 100%;
   display: flex;
+  margin: .3rem;
   justify-content: center;
 }
 .userProfile{
 
-    width: 100%;
+    width: 90%;
     height: 3.5rem;
     display: flex;
     flex-direction: row;

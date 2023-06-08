@@ -3,8 +3,8 @@
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: flex-start;
-    width: 95vw;
-    height: 90%;
+    width: 100%;
+    height: 80%;
     }
     
     .content {
@@ -13,7 +13,7 @@
     flex-wrap: nowrap;
     color: #b71c1c;
     text-shadow: 2px 2px 4px #000000;
-    width: 95vw;
+    width: 95%;
     height: 90%;
     }
     
@@ -22,8 +22,8 @@
     display: flex;
     flex-direction: column-reverse;
     position: relative;
-    width: 100vw;
-    height: 90%;
+    width: 100%;
+    height: 88%;
     }
     
     .content {
@@ -31,7 +31,7 @@
     justify-content: center;
     align-items: center;
     height: 85%;
-    width: 100vw;
+    width: 100%;
     padding: 0.2rem;
     }
     }
