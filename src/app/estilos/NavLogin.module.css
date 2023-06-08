@@ -66,6 +66,9 @@
     transition: transform .2s ease;
 }
 @media (max-width: 768px) {
+.navLogin{
+  height: 8%;
+}
 
 .userProfile{
   display: flex;
