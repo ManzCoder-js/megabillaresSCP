@@ -1,85 +1,31 @@
 import React, { useState } from 'react';
+import MesasDeBillar from './MesasDeBillar';
 
 const Ventas = () => {
-  const [nuevaVenta, setNuevaVenta] = useState({
-    modelo: '',
-    tamaño: '',
-    color: '',
-    acabado: '',
-    cliente: '',
-  });
   const [ventas, setVentas] = useState([]);
+  const [mostrarMesasDeBillar, setMostrarMesasDeBillar] = useState(false);
 
-  const handleChange = (e) => {
-    setNuevaVenta({
-      ...nuevaVenta,
-      [e.target.name]: e.target.value,
-    });
+  const handleCrearVenta = (nuevaVenta) => {
+    setVentas([...ventas, nuevaVenta]);
+    setMostrarMesasDeBillar(false); // Ocultar la tarjeta de MesasDeBillar después de crear la venta
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setVentas([...ventas, nuevaVenta]);
-    setNuevaVenta({
-      modelo: '',
-      tamaño: '',
-      color: '',
-      acabado: '',
-      cliente: '',
-    });
+  const handleMostrarMesasDeBillar = () => {
+    setMostrarMesasDeBillar(true);
   };
 
   return (
     <div>
       <h2>Ventas</h2>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Modelo:
-          <input
-            type="text"
-            name="modelo"
-            value={nuevaVenta.modelo}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Tamaño:
-          <input
-            type="text"
-            name="tamaño"
-            value={nuevaVenta.tamaño}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Color:
-          <input
-            type="text"
-            name="color"
-            value={nuevaVenta.color}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Acabado:
-          <input
-            type="text"
-            name="acabado"
-            value={nuevaVenta.acabado}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Cliente:
-          <input
-            type="text"
-            name="cliente"
-            value={nuevaVenta.cliente}
-            onChange={handleChange}
-          />
-        </label>
-        <button type="submit">Crear Venta</button>
-      </form>
+      {!mostrarMesasDeBillar && (
+        <button onClick={handleMostrarMesasDeBillar}>Crear Venta</button>
+      )}
+      {mostrarMesasDeBillar && (
+        <div className="venta-card">
+          <h3>Nueva Venta</h3>
+          <MesasDeBillar onSeleccion={handleCrearVenta} />
+        </div>
+      )}
       {ventas.map((venta, index) => (
         <div key={index} className="venta-card">
           <h3>{venta.modelo}</h3>
