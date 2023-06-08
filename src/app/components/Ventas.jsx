@@ -1,29 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MesasDeBillar from './MesasDeBillar';
 
 const Ventas = () => {
   const [ventas, setVentas] = useState([]);
   const [mostrarMesasDeBillar, setMostrarMesasDeBillar] = useState(false);
-  const [ventaEditar, setVentaEditar] = useState(null); // Estado para almacenar la venta actualmente seleccionada para su edición
+  const [ventaEditar, setVentaEditar] = useState(null);
+
+  useEffect(() => {
+    const ventasAlmacenadas = JSON.parse(localStorage.getItem('ventas'));
+    if (ventasAlmacenadas) {
+      setVentas(ventasAlmacenadas);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('ventas', JSON.stringify(ventas));
+  }, [ventas]);
 
   const handleCrearVenta = (nuevaVenta) => {
+    const ventaConPasos = {
+      ...nuevaVenta,
+      pasos: [
+        { nombre: 'Fabricar patas', estado: 'pendiente' },
+        { nombre: 'Fabricar casco o estructura', estado: 'pendiente' },
+        { nombre: 'Fabricar pizarra', estado: 'pendiente' },
+        { nombre: 'Fabricar rieles', estado: 'pendiente' },
+        { nombre: 'Fabricar esquineros', estado: 'pendiente' },
+        { nombre: 'Aplicar pintura', estado: 'pendiente' },
+        { nombre: 'Revisión de acabados', estado: 'pendiente' },
+      ],
+    };
+
     if (ventaEditar) {
-      // Si hay una venta seleccionada para editar, actualizamos la venta existente
       const ventasActualizadas = ventas.map((venta) =>
-        venta === ventaEditar ? nuevaVenta : venta
+        venta === ventaEditar ? ventaConPasos : venta
       );
       setVentas(ventasActualizadas);
-      setVentaEditar(null); // Limpiamos el estado de la venta a editar
+      setVentaEditar(null);
     } else {
-      // Si no hay venta seleccionada para editar, agregamos una nueva venta
-      setVentas([...ventas, nuevaVenta]);
+      setVentas([...ventas, ventaConPasos]);
     }
-    setMostrarMesasDeBillar(false); // Ocultar el formulario de MesasDeBillar después de crear/editar la venta
+    setMostrarMesasDeBillar(false);
   };
 
   const handleEditarVenta = (venta) => {
-    setVentaEditar(venta); // Establecer la venta seleccionada para editar
-    setMostrarMesasDeBillar(true); // Mostrar el formulario de MesasDeBillar para editar la venta
+    setVentaEditar(venta);
+    setMostrarMesasDeBillar(true);
   };
 
   const handleEliminarVenta = (venta) => {
@@ -32,12 +54,12 @@ const Ventas = () => {
   };
 
   const handleMostrarMesasDeBillar = () => {
-    setVentaEditar(null); // Limpiamos el estado de la venta a editar
+    setVentaEditar(null);
     setMostrarMesasDeBillar(true);
   };
 
   const handleCancelarFormulario = () => {
-    setVentaEditar(null); // Limpiamos el estado de la venta a editar
+    setVentaEditar(null);
     setMostrarMesasDeBillar(false);
   };
 
@@ -51,7 +73,7 @@ const Ventas = () => {
         <div className="venta-card">
           <h3>{ventaEditar ? 'Editar Venta' : 'Nueva Venta'}</h3>
           <MesasDeBillar
-            ventaEditar={ventaEditar} // Pasamos la venta a editar como prop
+            ventaEditar={ventaEditar}
             onSeleccion={handleCrearVenta}
             onCancel={handleCancelarFormulario}
           />
@@ -64,8 +86,8 @@ const Ventas = () => {
           <p>Color: {venta.color}</p>
           <p>Acabado: {venta.acabado}</p>
           <p>Cliente: {venta.cliente}</p>
-          <button onClick={() => handleEditarVenta(venta)}>Editar</button> {/* Agregamos el botón de Editar */}
-          <button onClick={() => handleEliminarVenta(venta)}>Eliminar</button> {/* Agregamos el botón de Eliminar */}
+          <button onClick={() => handleEditarVenta(venta)}>Editar</button>
+          <button onClick={() => handleEliminarVenta(venta)}>Eliminar</button>
         </div>
       ))}
     </div>

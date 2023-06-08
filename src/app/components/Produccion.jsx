@@ -1,22 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Produccion = () => {
-  const [ventas, setVentas] = useState([
-    {
-      id: 1,
-      modelo: 'Mesa de billar 1',
-      pasos: [
-        { nombre: 'Fabricar patas', estado: 'pendiente' },
-        { nombre: 'Fabricar casco o estructura', estado: 'pendiente' },
-        { nombre: 'Fabricar pizarra', estado: 'pendiente' },
-        { nombre: 'Fabricar rieles', estado: 'pendiente' },
-        { nombre: 'Fabricar esquineros', estado: 'pendiente' },
-        { nombre: 'Aplicar pintura', estado: 'pendiente' },
-        { nombre: 'Revisión de acabados', estado: 'pendiente' },
-      ],
-    },
-    // Agrega más objetos de ventas con sus respectivos pasos
-  ]);
+  const [ventas, setVentas] = useState([]);
+
+  useEffect(() => {
+    // Cargar las ventas almacenadas en el localStorage cuando el componente se monta
+    const ventasAlmacenadas = JSON.parse(localStorage.getItem('ventas'));
+    if (ventasAlmacenadas) {
+      setVentas(ventasAlmacenadas);
+    }
+  }, []);
 
   const marcarPaso = (ventaId, pasoIndex, estado) => {
     // Actualiza el estado del paso en la venta correspondiente
@@ -34,6 +27,8 @@ const Produccion = () => {
     });
 
     setVentas(nuevasVentas);
+    // Almacenar las ventas actualizadas en el localStorage
+    localStorage.setItem('ventas', JSON.stringify(nuevasVentas));
   };
 
   return (
