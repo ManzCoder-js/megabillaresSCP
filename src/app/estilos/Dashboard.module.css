@@ -19,7 +19,6 @@
     
     @media (max-width: 768px) {
     .main {
-    display: flex;
     flex-direction: column-reverse;
     position: relative;
     width: 100%;
@@ -30,7 +29,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 85%;
+    height: 100%;
     width: 100%;
     padding: 0.2rem;
     }
