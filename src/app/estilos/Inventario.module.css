@@ -40,6 +40,13 @@ text-shadow: 2px 2px 4px #000000;
 .input input::placeholder {
 width: 60%;
 }
+.crearInvent{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 90%;
+    height: 80%;
+}
 
 .ItemCont {
 display: flex;

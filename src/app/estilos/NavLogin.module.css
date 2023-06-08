@@ -77,7 +77,7 @@
   
 }
 .userName{
-  width: 100%;
+  width:fit-content;
   font-size: 18px ;
   position: absolute;
   left: 20%;

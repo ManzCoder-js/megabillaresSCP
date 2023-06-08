@@ -87,6 +87,7 @@ const InventoryApp = () => {
   return (
     
       <div className={styles.invent}>
+      <div className={styles.crearInvent}>  
       <div className={styles.input} >
       <input
         type="text"
@@ -106,8 +107,9 @@ const InventoryApp = () => {
         onChange={(e) => setNewItem({ ...newItem, quantity: parseInt(e.target.value) })}
         placeholder="Cantidad"
       />
+      </div>
       <button className={styles.btnAgregar} onClick={addNewItem}>Agregar</button>
-    
+
     </div>
     <div className={styles.ContenedorInv}>
       <div className={styles.ItemCard}>
