@@ -1,70 +1,96 @@
-'use client'
-import { useState } from "react";
-const Ventas = () => {
-  const [poolTable, setPoolTable] = useState({
-    size: '',
-    slateModel: '',
-    clothColor: '',
-  });
+import React, { useState } from 'react';
 
-  // Función para manejar los cambios en las características de la mesa de billar
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setPoolTable((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+const Ventas = () => {
+  const [nuevaVenta, setNuevaVenta] = useState({
+    modelo: '',
+    tamaño: '',
+    color: '',
+    acabado: '',
+    cliente: '',
+  });
+  const [ventas, setVentas] = useState([]);
+
+  const handleChange = (e) => {
+    setNuevaVenta({
+      ...nuevaVenta,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  // Función para guardar la nueva mesa de billar
-  const handleSave = () => {
-    // Aquí puedes realizar cualquier lógica adicional, como enviar los datos al servidor
-    console.log(poolTable);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setVentas([...ventas, nuevaVenta]);
+    setNuevaVenta({
+      modelo: '',
+      tamaño: '',
+      color: '',
+      acabado: '',
+      cliente: '',
+    });
   };
 
   return (
     <div>
-      <h2>Mesas de billar</h2>
-      <div>
-        <button>Crear nueva venta</button>
-      </div>
-      <div>
-        {/* Aquí se mostrará la tarjeta para modificar las características */}
-        <h3>Modificar características</h3>
-        <form>
-          <label>
-            Tamaño:
-            <input
-              type="text"
-              name="size"
-              value={poolTable.size}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Modelo de pizarra:
-            <input
-              type="text"
-              name="slateModel"
-              value={poolTable.slateModel}
-              onChange={handleInputChange}
-            />
-          </label>
-          <label>
-            Color de paño:
-            <input
-              type="text"
-              name="clothColor"
-              value={poolTable.clothColor}
-              onChange={handleInputChange}
-            />
-          </label>
-        </form>
-        <button onClick={handleSave}>Guardar</button>
-      </div>
+      <h2>Ventas</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Modelo:
+          <input
+            type="text"
+            name="modelo"
+            value={nuevaVenta.modelo}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Tamaño:
+          <input
+            type="text"
+            name="tamaño"
+            value={nuevaVenta.tamaño}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Color:
+          <input
+            type="text"
+            name="color"
+            value={nuevaVenta.color}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Acabado:
+          <input
+            type="text"
+            name="acabado"
+            value={nuevaVenta.acabado}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Cliente:
+          <input
+            type="text"
+            name="cliente"
+            value={nuevaVenta.cliente}
+            onChange={handleChange}
+          />
+        </label>
+        <button type="submit">Crear Venta</button>
+      </form>
+      {ventas.map((venta, index) => (
+        <div key={index} className="venta-card">
+          <h3>{venta.modelo}</h3>
+          <p>Tamaño: {venta.tamaño}</p>
+          <p>Color: {venta.color}</p>
+          <p>Acabado: {venta.acabado}</p>
+          <p>Cliente: {venta.cliente}</p>
+        </div>
+      ))}
     </div>
   );
 };
 
-export default Ventas
-
+export default Ventas;
