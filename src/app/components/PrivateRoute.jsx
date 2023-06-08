@@ -1,19 +1,18 @@
-'use client'
 import { useContext, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // Importa 'next/router' en lugar de 'next/navigation'
 import { AuthContext } from './auth-context';
 
 function PrivateRoute({ children }) {
-  const user = useContext(AuthContext);
+  const authContext = useContext(AuthContext);
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
+    if (!authContext.user) {
       router.replace('/');
     }
-  }, [user, router]);
+  }, [authContext.user, router]);
 
-  if (!user) {
+  if (!authContext.user) {
     return null;
   }
 
