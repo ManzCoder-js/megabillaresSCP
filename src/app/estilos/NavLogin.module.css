@@ -75,5 +75,9 @@
 .userName{
   align-items: center;
   justify-content: center;
+}.btn{
+  position: absolute;
+  right: .5rem;
+  top: .2rem;
 }
 }
