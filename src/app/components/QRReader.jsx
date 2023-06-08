@@ -13,7 +13,7 @@ const QRReader = ({ onScan, onClose }) => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
       videoRef.current.srcObject = stream;
-      await videoRef.current.play();
+      videoRef.current.play();
       setStream(stream);
     } catch (error) {
       setError('Failed to access the camera');
@@ -27,7 +27,7 @@ const QRReader = ({ onScan, onClose }) => {
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d', { willReadFrequently: true });
+    const context = canvas.getContext('2d', { alpha: false });
 
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -117,7 +117,7 @@ const QRReader = ({ onScan, onClose }) => {
                 textAlign: 'center',
               }}
             >
-              <p style={{ margin: 0, fontSize: '18px', fontWeight: 'bold' }}>¡Código QR detectado!</p>
+              <p style={{ margin: 0, fontSize: '18px', fontWeight: 'bold' }}>QR Code detected!</p>
             </div>
           )}
         </div>

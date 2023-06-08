@@ -10,13 +10,15 @@ const InventoryApp = () => {
   const [newItem, setNewItem] = useState({
     name: '',
     quantity: 0,
-    qrCode: ''
+    qrCode: '',
+    comment: ''
   });
   const [searchTerm, setSearchTerm] = useState('');
   const [showQRReader, setShowQRReader] = useState(false);
   const [scannedItemName, setScannedItemName] = useState('');
   const [scannedItemCategory, setScannedItemCategory] = useState('');
   const canvasRefs = useRef([]);
+  const [editItem, setEditItem] = useState(null);
 
   useEffect(() => {
     const storedCategories = JSON.parse(localStorage.getItem('categories'));
@@ -52,17 +54,19 @@ const InventoryApp = () => {
       setSelectedCategory('');
     }
   };
+
   const deleteCategory = (categoryToDelete) => {
     const updatedCategories = categories.filter(
       (category) => category !== categoryToDelete
     );
     setCategories(updatedCategories);
-  
+
     const updatedItems = items.filter(
       (item) => item.category !== categoryToDelete
     );
     setItems(updatedItems);
   };
+
   const addItem = (category) => {
     if (newItem.name.trim() !== '') {
       const updatedItem = { ...newItem, category };
@@ -70,7 +74,8 @@ const InventoryApp = () => {
       setNewItem({
         name: '',
         quantity: 0,
-        qrCode: ''
+        qrCode: '',
+        comment: ''
       });
     }
   };
@@ -117,9 +122,10 @@ const InventoryApp = () => {
   };
 
   const searchItems = () => {
-    return items.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.category.toLowerCase().includes(searchTerm.toLowerCase())
+    return items.filter(
+      (item) =>
+        item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        item.category.toLowerCase().includes(searchTerm.toLowerCase())
     ).filter((item) => {
       if (scannedItemName !== '') {
         return item.name.toLowerCase().includes(scannedItemName.toLowerCase());
@@ -153,6 +159,12 @@ const InventoryApp = () => {
     return <canvas ref={qrCodeRef} width={100} height={100} />;
   };
 
+  const handleCommentChange = (index, value) => {
+    const updatedItems = [...items];
+    updatedItems[index].comment = value;
+    setItems(updatedItems);
+  };
+
   return (
     <div className={styles.invent}>
       <div className={styles.crearInvent}>
@@ -176,7 +188,6 @@ const InventoryApp = () => {
         {categories.map((category, categoryIndex) => (
           <div key={categoryIndex}>
             <h2>{category}</h2>
-            
             <div className={styles.ItemCard}>
               {searchItems().map((item, itemIndex) => {
                 if (item.category === category) {
@@ -185,61 +196,73 @@ const InventoryApp = () => {
                       <p>Material: {item.name}</p>
                       <p>Categoría: {item.category}</p>
                       <p>Cantidad: {item.quantity}</p>
-                      <QRCodeComponent qrCodeValue={`Item: ${item.name} Categoría: ${item.category}`} />
-                      <button onClick={() => deleteItem(itemIndex)}>Eliminar</button>
+                      <QRCodeComponent
+                        qrCodeValue={`Item: ${item.name} Categoría: ${item.category}`}
+                      />
+                      {editItem === itemIndex ? (
+                        <>
+                          <input
+                            type="text"
+                            value={item.comment}
+                            onChange={(e) => handleCommentChange(itemIndex, e.target.value)}
+                          />
+                          <button
+                            className={styles.btnGuardar}
+                            onClick={() => setEditItem(null)}
+                          >
+                            Guardar
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            className={styles.btnEditar}
+                            onClick={() => setEditItem(itemIndex)}
+                          >
+                            Editar
+                          </button>
+                          <button
+                            className={styles.btnEliminar}
+                            onClick={() => deleteItem(itemIndex)}
+                          >
+                            Eliminar
+                          </button>
+                          <p>Comentario: {item.comment}</p>
+                        </>
+                      )}
                     </li>
                   );
                 }
                 return null;
               })}
-              <div className={styles.input}>
+              <div className={styles.addItem}>
                 <input
                   type="text"
                   value={newItem.name}
                   onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-                  placeholder="Nombre del elemento"
+                  placeholder="Nombre del material"
                 />
                 <input
                   type="number"
                   value={newItem.quantity}
-                  onChange={(e) => setNewItem({ ...newItem, quantity: parseInt(e.target.value) })}
+                  onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
                   placeholder="Cantidad"
                 />
-                <button className={styles.btnAgregar} onClick={() => addItem(category)}>
-                  Agregar Elemento
+                <input
+                  type="text"
+                  value={newItem.comment}
+                  onChange={(e) => setNewItem({ ...newItem, comment: e.target.value })}
+                  placeholder="Comentario"
+                />
+                <button className={styles.btnAdd} onClick={() => addItem(category)}>
+                  Agregar Material
                 </button>
-                <button
-                className={styles.btnDeleteCategory}
-                onClick={() => deleteCategory(category)}
-              >
-                Eliminar
-              </button>
               </div>
             </div>
+            <div className={styles.separator} />
           </div>
         ))}
       </div>
-      {scannedItemName && (
-        <div>
-          <h2>Item escaneado: {scannedItemName}</h2>
-          <div className={styles.ItemCard}>
-            {searchItems().map((item, itemIndex) => {
-              if (item.name.toLowerCase() === scannedItemName.toLowerCase()) {
-                return (
-                  <li key={itemIndex} className={styles.ItemCont}>
-                    <p>Material: {item.name}</p>
-                    <p>Categoría: {item.category}</p>
-                    <p>Cantidad: {item.quantity}</p>
-                    <QRCodeComponent qrCodeValue={`Item: ${item.name} Categoría: ${item.category}`} />
-                    <button onClick={() => deleteItem(itemIndex)}>Eliminar</button>
-                  </li>
-                );
-              }
-              return null;
-            })}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
