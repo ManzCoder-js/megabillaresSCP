@@ -32,8 +32,8 @@
   /* Estilos responsive para dispositivos móviles */
   @media (max-width: 768px) {
     .Sidebar {
-      width: 90vw;
-      height: 7%;
+      width: 90%;
+      height: 1%;
       display: flex;
       flex-direction: row;
       justify-content:flex-start;
