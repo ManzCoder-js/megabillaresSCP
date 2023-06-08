@@ -126,9 +126,9 @@ align-items: center;
 
 .ItemCont {
 flex-direction: column;
-margin-left: 1rem;
+margin-left: .5rem;
 align-items: center;
-height: 350px;
+height: 100%;
 width: 300px;
 border-radius: 50px;
 background-color: #978383;
