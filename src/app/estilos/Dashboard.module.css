@@ -21,7 +21,7 @@
     .main {
     flex-direction: column-reverse;
     position: relative;
-
+    height: 90%;
     }
     
     .content {

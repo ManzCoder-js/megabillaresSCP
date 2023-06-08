@@ -33,7 +33,7 @@
   @media (max-width: 768px) {
     .Sidebar {
       width: 90%;
-      height: 1%;
+      height: 10%;
       display: flex;
       flex-direction: row;
       justify-content:flex-start;
@@ -41,8 +41,8 @@
     }
   
     .opcion {
-      height: 15vw;
-      width: 15vw;
+      height:52px;
+      width: 52px;
       margin: 5px;  
       font-size: 8px;
     }
