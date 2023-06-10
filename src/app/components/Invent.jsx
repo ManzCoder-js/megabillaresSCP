@@ -18,7 +18,7 @@ const InventoryApp = () => {
   const [scannedItemName, setScannedItemName] = useState('');
   const [scannedItemCategory, setScannedItemCategory] = useState('');
   const canvasRefs = useRef([]);
-  const [editItem, setEditItem] = useState(null);
+  const [editItemIndex, setEditItemIndex] = useState(null);
 
   useEffect(() => {
     const storedCategories = JSON.parse(localStorage.getItem('categories'));
@@ -165,6 +165,18 @@ const InventoryApp = () => {
     setItems(updatedItems);
   };
 
+  const handleItemChange = (e) => {
+    const { name, value } = e.target;
+    setNewItem((prevNewItem) => ({
+      ...prevNewItem,
+      [name]: value
+    }));
+  };
+
+  const handleEditItem = (index) => {
+    setEditItemIndex(index);
+  };
+
   return (
     <div className={styles.invent}>
       <div className={styles.crearInvent}>
@@ -199,25 +211,31 @@ const InventoryApp = () => {
                       <QRCodeComponent
                         qrCodeValue={`Item: ${item.name} Categoría: ${item.category}`}
                       />
-                      {editItem === itemIndex ? (
+                      {editItemIndex === itemIndex ? (
                         <>
                           <input
-                            type="text"
+                            type="number"
+                            name="quantity"
+                            value={item.quantity}
+                            onChange={(e) => handleItemChange(e, itemIndex)}
+                          />
+                          <textarea
                             value={item.comment}
                             onChange={(e) => handleCommentChange(itemIndex, e.target.value)}
                           />
                           <button
                             className={styles.btnGuardar}
-                            onClick={() => setEditItem(null)}
+                            onClick={() => setEditItemIndex(null)}
                           >
                             Guardar
                           </button>
                         </>
                       ) : (
                         <>
+                          <p>Comentario: {item.comment}</p>
                           <button
                             className={styles.btnEditar}
-                            onClick={() => setEditItem(itemIndex)}
+                            onClick={() => handleEditItem(itemIndex)}
                           >
                             Editar
                           </button>
@@ -227,7 +245,6 @@ const InventoryApp = () => {
                           >
                             Eliminar
                           </button>
-                          <p>Comentario: {item.comment}</p>
                         </>
                       )}
                     </li>
@@ -235,31 +252,38 @@ const InventoryApp = () => {
                 }
                 return null;
               })}
-              <div className={styles.addItem}>
-                <input
-                  type="text"
-                  value={newItem.name}
-                  onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
-                  placeholder="Nombre del material"
-                />
-                <input
-                  type="number"
-                  value={newItem.quantity}
-                  onChange={(e) => setNewItem({ ...newItem, quantity: e.target.value })}
-                  placeholder="Cantidad"
-                />
-                <input
-                  type="text"
-                  value={newItem.comment}
-                  onChange={(e) => setNewItem({ ...newItem, comment: e.target.value })}
-                  placeholder="Comentario"
-                />
-                <button className={styles.btnAdd} onClick={() => addItem(category)}>
-                  Agregar Material
-                </button>
-              </div>
             </div>
-            <div className={styles.separator} />
+            <button
+              className={styles.btnEliminarCategoria}
+              onClick={() => deleteCategory(category)}
+            >
+              Eliminar Categoría
+            </button>
+            <div className={styles.input}>
+              <input
+                type="text"
+                name="name"
+                value={newItem.name}
+                onChange={handleItemChange}
+                placeholder="Nombre del material"
+              />
+              <input
+                type="number"
+                name="quantity"
+                value={newItem.quantity}
+                onChange={handleItemChange}
+                placeholder="Cantidad"
+              />
+              <textarea
+                name="comment"
+                value={newItem.comment}
+                onChange={handleItemChange}
+                placeholder="Comentario"
+              />
+              <button className={styles.btnAgregar} onClick={() => addItem(category)}>
+                Agregar Material
+              </button>
+            </div>
           </div>
         ))}
       </div>
