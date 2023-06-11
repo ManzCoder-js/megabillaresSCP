@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { AuthContext } from './auth-context';
 import { useRouter } from 'next/navigation';
 import { signInWithPopup, signOut } from 'firebase/auth';
-import { auth, googleAuthProvider } from './Firebase';
+import { auth, googleAuthProvider } from './firebase';
 import Image from 'next/image';
 import Link from 'next/link';
 import styles from '../estilos/NavLogin.module.css';

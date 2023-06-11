@@ -12,11 +12,17 @@
     width: 100%;
     height: 100%;
     padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
   }
   
   .ContenedorInv h2 {
     display: flex;
     justify-content: center;
+    display: flex;
+    flex-direction: column;
   }
   
   .input {
@@ -43,15 +49,15 @@
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    width: 90%;
-    height: 80%;
+    width: 80%;
+    height: 40%;
   }
   
   .ItemCont {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
     border: none;
     padding: 0.5rem;
     width: 80%;
@@ -59,8 +65,12 @@
   }
   
   .ItemCard {
-    width: 100%;
+    width: 80%;
     height: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   
   .ItemCont p {
