@@ -1,55 +1,76 @@
 import React, { useState, useEffect } from 'react';
+import { collection, getDocs, updateDoc, doc } from 'firebase/firestore';
+import { db } from './firebase';
 
 const Produccion = () => {
   const [ventas, setVentas] = useState([]);
 
   useEffect(() => {
-    // Cargar las ventas almacenadas en el localStorage cuando el componente se monta
-    const ventasAlmacenadas = JSON.parse(localStorage.getItem('ventas'));
-    if (ventasAlmacenadas) {
-      setVentas(ventasAlmacenadas);
-    }
+    const fetchVentas = async () => {
+      try {
+        const ventasCollection = collection(db, 'ventas');
+        const ventasSnapshot = await getDocs(ventasCollection);
+        const ventasData = ventasSnapshot.docs.map((doc) => ({
+          id: doc.id,
+          modelo: doc.data().modelo,
+          cliente: doc.data().cliente,
+          pasos: doc.data().pasos
+        }));
+        setVentas(ventasData);
+      } catch (error) {
+        console.error('Error fetching ventas: ', error);
+        // Mostrar un mensaje de error al usuario si es necesario
+      }
+    };
+
+    fetchVentas();
   }, []);
 
-  const marcarPaso = (ventaId, pasoIndex, estado) => {
-    // Actualiza el estado del paso en la venta correspondiente
-    const nuevasVentas = ventas.map((venta) => {
-      if (venta.id === ventaId) {
-        const nuevosPasos = venta.pasos.map((paso, index) => {
-          if (index === pasoIndex) {
-            return { ...paso, estado };
-          }
-          return paso;
-        });
-        return { ...venta, pasos: nuevosPasos };
-      }
-      return venta;
-    });
+  const obtenerVentaIndex = (ventaId) => {
+    return ventas.findIndex((venta) => venta.id === ventaId);
+  };
 
-    setVentas(nuevasVentas);
-    // Almacenar las ventas actualizadas en el localStorage
-    localStorage.setItem('ventas', JSON.stringify(nuevasVentas));
+  const handleActualizarEstadoPaso = async (ventaId, pasoIndex, nuevoEstado) => {
+    try {
+      const ventaRef = doc(db, 'ventas', ventaId);
+
+      await updateDoc(ventaRef, {
+        [`pasos.${pasoIndex}.estado`]: nuevoEstado
+      });
+
+      setVentas((prevVentas) => {
+        const ventasActualizadas = [...prevVentas];
+        const ventaIndex = obtenerVentaIndex(ventaId);
+        ventasActualizadas[ventaIndex].pasos[pasoIndex].estado = nuevoEstado;
+        return ventasActualizadas;
+      });
+    } catch (error) {
+      console.error('Error actualizando estado del paso: ', error);
+      // Mostrar un mensaje de error al usuario si es necesario
+    }
   };
 
   return (
     <div>
-      <h2>Producción</h2>
+      <h2>Proceso de producción</h2>
       {ventas.map((venta) => (
-        <div key={venta.id} className="venta-card">
-          <h3>{venta.modelo}</h3>
-          <h4>Pasos de fabricación:</h4>
-          <ul>
-            {venta.pasos.map((paso, index) => (
-              <li key={index}>
-                {paso.nombre} - {paso.estado}
-                <div>
-                  <button onClick={() => marcarPaso(venta.id, index, 'pendiente')}>Pendiente</button>
-                  <button onClick={() => marcarPaso(venta.id, index, 'en proceso')}>En Proceso</button>
-                  <button onClick={() => marcarPaso(venta.id, index, 'acabado')}>Acabado</button>
-                </div>
-              </li>
-            ))}
-          </ul>
+        <div key={venta.id}>
+          <h3>Venta: {venta.modelo} - {venta.cliente}</h3>
+          {Array.isArray(venta.pasos) && venta.pasos.length > 0 ? (
+            venta.pasos.map((paso, index) => (
+              <div key={index}>
+                <button
+                  onClick={() =>
+                    handleActualizarEstadoPaso(venta.id, index, paso.estado === 'Completado' ? 'Pendiente' : 'Completado')
+                  }
+                >
+                  {paso.nombre} - {paso.estado === 'Completado' ? 'Completado' : 'Pendiente'}
+                </button>
+              </div>
+            ))
+          ) : (
+            <div>No hay pasos disponibles para esta venta.</div>
+          )}
         </div>
       ))}
     </div>

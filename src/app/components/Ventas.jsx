@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs } from 'firebase/firestore';
+import { db } from './firebase';
 import MesasDeBillar from './MesasDeBillar';
 
 const Ventas = () => {
@@ -7,17 +9,36 @@ const Ventas = () => {
   const [ventaEditar, setVentaEditar] = useState(null);
 
   useEffect(() => {
-    const ventasAlmacenadas = JSON.parse(localStorage.getItem('ventas'));
-    if (ventasAlmacenadas) {
-      setVentas(ventasAlmacenadas);
-    }
+    const fetchVentas = async () => {
+      const ventasCollection = collection(db, 'ventas');
+      const ventasSnapshot = await getDocs(ventasCollection);
+      const ventasData = ventasSnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setVentas(ventasData);
+    };
+
+    fetchVentas();
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('ventas', JSON.stringify(ventas));
+    const saveVentas = async () => {
+      try {
+        const ventasCollection = collection(db, 'ventas');
+        await deleteDocs(ventasCollection); // Elimina todas las ventas existentes en Firebase antes de guardar las nuevas
+        ventas.forEach(async (venta) => {
+          await addDoc(ventasCollection, venta);
+        });
+      } catch (error) {
+        console.error('Error saving ventas: ', error);
+      }
+    };
+
+    saveVentas();
   }, [ventas]);
 
-  const handleCrearVenta = (nuevaVenta) => {
+  const handleCrearVenta = async (nuevaVenta) => {
     const ventaConPasos = {
       ...nuevaVenta,
       pasos: [
@@ -32,13 +53,21 @@ const Ventas = () => {
     };
 
     if (ventaEditar) {
-      const ventasActualizadas = ventas.map((venta) =>
-        venta === ventaEditar ? ventaConPasos : venta
+      const ventaRef = doc(db, 'ventas', ventaEditar.id);
+      await updateDoc(ventaRef, ventaConPasos);
+      setVentas((prevVentas) =>
+        prevVentas.map((venta) =>
+          venta.id === ventaEditar.id ? { ...venta, ...ventaConPasos } : venta
+        )
       );
-      setVentas(ventasActualizadas);
       setVentaEditar(null);
     } else {
-      setVentas([...ventas, ventaConPasos]);
+      try {
+        const docRef = await addDoc(collection(db, 'ventas'), ventaConPasos);
+        setVentas((prevVentas) => [...prevVentas, { id: docRef.id, ...ventaConPasos }]);
+      } catch (error) {
+        console.error('Error creating venta: ', error);
+      }
     }
     setMostrarMesasDeBillar(false);
   };
@@ -48,9 +77,14 @@ const Ventas = () => {
     setMostrarMesasDeBillar(true);
   };
 
-  const handleEliminarVenta = (venta) => {
-    const ventasActualizadas = ventas.filter((v) => v !== venta);
-    setVentas(ventasActualizadas);
+  const handleEliminarVenta = async (venta) => {
+    try {
+      const ventaRef = doc(db, 'ventas', venta.id);
+      await deleteDoc(ventaRef);
+      setVentas((prevVentas) => prevVentas.filter((v) => v.id !== venta.id));
+    } catch (error) {
+      console.error('Error deleting venta: ', error);
+    }
   };
 
   const handleMostrarMesasDeBillar = () => {
