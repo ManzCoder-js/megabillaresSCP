@@ -14,7 +14,7 @@ const Produccion = () => {
           id: doc.id,
           modelo: doc.data().modelo,
           cliente: doc.data().cliente,
-          pasos: doc.data().pasos
+          pasos: doc.data().pasosProduccion
         }));
         setVentas(ventasData);
       } catch (error) {
@@ -34,19 +34,36 @@ const Produccion = () => {
     try {
       const ventaRef = doc(db, 'ventas', ventaId);
 
+      const ventaData = ventas.find((venta) => venta.id === ventaId);
+      const pasosActualizados = [...ventaData.pasos];
+      pasosActualizados[pasoIndex].estado = nuevoEstado;
+
       await updateDoc(ventaRef, {
-        [`pasos.${pasoIndex}.estado`]: nuevoEstado
+        pasosProduccion: pasosActualizados
       });
 
       setVentas((prevVentas) => {
         const ventasActualizadas = [...prevVentas];
         const ventaIndex = obtenerVentaIndex(ventaId);
-        ventasActualizadas[ventaIndex].pasos[pasoIndex].estado = nuevoEstado;
+        ventasActualizadas[ventaIndex].pasos = pasosActualizados;
         return ventasActualizadas;
       });
     } catch (error) {
       console.error('Error actualizando estado del paso: ', error);
       // Mostrar un mensaje de error al usuario si es necesario
+    }
+  };
+
+  const obtenerSiguienteEstado = (estadoActual) => {
+    switch (estadoActual) {
+      case 'Pendiente':
+        return 'En Proceso';
+      case 'En Proceso':
+        return 'Completado';
+      case 'Completado':
+        return 'Pendiente';
+      default:
+        return 'Pendiente';
     }
   };
 
@@ -61,10 +78,10 @@ const Produccion = () => {
               <div key={index}>
                 <button
                   onClick={() =>
-                    handleActualizarEstadoPaso(venta.id, index, paso.estado === 'Completado' ? 'Pendiente' : 'Completado')
+                    handleActualizarEstadoPaso(venta.id, index, obtenerSiguienteEstado(paso.estado))
                   }
                 >
-                  {paso.nombre} - {paso.estado === 'Completado' ? 'Completado' : 'Pendiente'}
+                  {paso.nombre} - {paso.estado}
                 </button>
               </div>
             ))

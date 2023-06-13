@@ -1,118 +1,99 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { updateDoc, doc } from 'firebase/firestore';
+import { db } from './firebase';
 
 const MesasDeBillar = ({ ventaEditar, onSeleccion, onCancel }) => {
-  const [nuevaVenta, setNuevaVenta] = useState({
-    modelo: '',
-    tamaño: '',
-    color: '',
-    acabado: '',
-    cliente: '',
-  });
-
-  useEffect(() => {
-    if (ventaEditar) {
-      setNuevaVenta(ventaEditar);
-    }
-  }, [ventaEditar]);
-
-  const handleChange = (field, value) => {
-    setNuevaVenta({
-      ...nuevaVenta,
-      [field]: value,
-    });
-  };
+  const [modelo, setModelo] = useState(ventaEditar ? ventaEditar.modelo : '');
+  const [tamaño, setTamaño] = useState(ventaEditar ? ventaEditar.tamaño : '');
+  const [color, setColor] = useState(ventaEditar ? ventaEditar.color : '');
+  const [acabado, setAcabado] = useState(ventaEditar ? ventaEditar.acabado : '');
+  const [cliente, setCliente] = useState(ventaEditar ? ventaEditar.cliente : '');
+  const [fechaEntrega, setFechaEntrega] = useState(ventaEditar ? ventaEditar.fechaEntrega : '');
+  const [detallesMesa, setDetallesMesa] = useState(ventaEditar ? ventaEditar.detallesMesa : '');
+  const [pasosProduccion, setPasosProduccion] = useState(
+    ventaEditar ? ventaEditar.pasosProduccion : [
+      { nombre: 'Fabricar patas', estado: 'pendiente' },
+      { nombre: 'Fabricar casco o estructura', estado: 'pendiente' },
+      { nombre: 'Fabricar pizarra', estado: 'pendiente' },
+      { nombre: 'Fabricar rieles', estado: 'pendiente' },
+      { nombre: 'Fabricar esquineros', estado: 'pendiente' },
+      { nombre: 'Aplicar pintura', estado: 'pendiente' },
+      { nombre: 'Revisión de acabados', estado: 'pendiente' },
+    ]
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const nuevaVenta = {
+      modelo,
+      tamaño,
+      color,
+      acabado,
+      cliente,
+      fechaEntrega,
+      detallesMesa,
+      pasosProduccion,
+    };
     onSeleccion(nuevaVenta);
-    setNuevaVenta({
-      modelo: '',
-      tamaño: '',
-      color: '',
-      acabado: '',
-      cliente: '',
-    });
   };
 
-  const handleCancel = () => {
-    setNuevaVenta({
-      modelo: '',
-      tamaño: '',
-      color: '',
-      acabado: '',
-      cliente: '',
-    });
-    onCancel(); // Llamada a la función onCancel para cerrar el formulario
+  const handlePasoChange = async (index, e) => {
+    const updatedPasosProduccion = [...pasosProduccion];
+    updatedPasosProduccion[index].estado = e.target.value;
+    setPasosProduccion(updatedPasosProduccion);
+
+    if (ventaEditar) {
+      const ventaRef = doc(db, 'ventas', ventaEditar.id);
+      await updateDoc(ventaRef, { pasosProduccion: updatedPasosProduccion });
+    }
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Modelo:
-          <select
-            value={nuevaVenta.modelo}
-            onChange={(e) => handleChange('modelo', e.target.value)}
-          >
-            <option value="">Seleccione un modelo</option>
-            <option value="Modelo 1">Modelo 1</option>
-            <option value="Modelo 2">Modelo 2</option>
-            <option value="Modelo 3">Modelo 3</option>
-            {/* Agrega más opciones de modelo aquí */}
-          </select>
-        </label>
-        <label>
-          Tamaño:
-          <select
-            value={nuevaVenta.tamaño}
-            onChange={(e) => handleChange('tamaño', e.target.value)}
-          >
-            <option value="">Seleccione un tamaño</option>
-            <option value="Tamaño 1">Tamaño 1</option>
-            <option value="Tamaño 2">Tamaño 2</option>
-            <option value="Tamaño 3">Tamaño 3</option>
-            {/* Agrega más opciones de tamaño aquí */}
-          </select>
-        </label>
-        <label>
-          Color:
-          <select
-            value={nuevaVenta.color}
-            onChange={(e) => handleChange('color', e.target.value)}
-          >
-            <option value="">Seleccione un color</option>
-            <option value="Color 1">Color 1</option>
-            <option value="Color 2">Color 2</option>
-            <option value="Color 3">Color 3</option>
-            {/* Agrega más opciones de color aquí */}
-          </select>
-        </label>
-        <label>
-          Acabado:
-          <select
-            value={nuevaVenta.acabado}
-            onChange={(e) => handleChange('acabado', e.target.value)}
-          >
-            <option value="">Seleccione un acabado</option>
-            <option value="Acabado 1">Acabado 1</option>
-            <option value="Acabado 2">Acabado 2</option>
-            <option value="Acabado 3">Acabado 3</option>
-            {/* Agrega más opciones de acabado aquí */}
-          </select>
-        </label>
-        <label>
-          Cliente:
-          <input
-            type="text"
-            name="cliente"
-            value={nuevaVenta.cliente}
-            onChange={(e) => handleChange('cliente', e.target.value)}
-          />
-        </label>
-        <button type="submit">{ventaEditar ? 'Guardar Cambios' : 'Crear Venta'}</button>
-        <button type="button" onClick={handleCancel}>Cancelar</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <label>
+        Modelo:
+        <input type="text" value={modelo} onChange={(e) => setModelo(e.target.value)} />
+      </label>
+      <label>
+        Tamaño:
+        <input type="text" value={tamaño} onChange={(e) => setTamaño(e.target.value)} />
+      </label>
+      <label>
+        Color:
+        <input type="text" value={color} onChange={(e) => setColor(e.target.value)} />
+      </label>
+      <label>
+        Acabado:
+        <input type="text" value={acabado} onChange={(e) => setAcabado(e.target.value)} />
+      </label>
+      <label>
+        Cliente:
+        <input type="text" value={cliente} onChange={(e) => setCliente(e.target.value)} />
+      </label>
+      <label>
+        Fecha de Entrega:
+        <input type="text" value={fechaEntrega} onChange={(e) => setFechaEntrega(e.target.value)} />
+      </label>
+      <label>
+        Detalles de la Mesa:
+        <textarea value={detallesMesa} onChange={(e) => setDetallesMesa(e.target.value)} />
+      </label>
+      <h4>Pasos de Producción:</h4>
+      {pasosProduccion.map((paso, index) => (
+        <div key={index}>
+          <label>
+            {paso.nombre}:
+            <select value={paso.estado} onChange={(e) => handlePasoChange(index, e)}>
+              <option value="Pendiente">Pendiente</option>
+              <option value="En Proceso">En Proceso</option>
+              <option value="Completado">Completado</option>
+            </select>
+          </label>
+        </div>
+      ))}
+      <button type="submit">{ventaEditar ? 'Actualizar' : 'Guardar'}</button>
+      <button type="button" onClick={onCancel}>Cancelar</button>
+    </form>
   );
 };
 

@@ -39,32 +39,19 @@ const Ventas = () => {
   }, [ventas]);
 
   const handleCrearVenta = async (nuevaVenta) => {
-    const ventaConPasos = {
-      ...nuevaVenta,
-      pasos: [
-        { nombre: 'Fabricar patas', estado: 'pendiente' },
-        { nombre: 'Fabricar casco o estructura', estado: 'pendiente' },
-        { nombre: 'Fabricar pizarra', estado: 'pendiente' },
-        { nombre: 'Fabricar rieles', estado: 'pendiente' },
-        { nombre: 'Fabricar esquineros', estado: 'pendiente' },
-        { nombre: 'Aplicar pintura', estado: 'pendiente' },
-        { nombre: 'Revisión de acabados', estado: 'pendiente' },
-      ],
-    };
-
     if (ventaEditar) {
       const ventaRef = doc(db, 'ventas', ventaEditar.id);
-      await updateDoc(ventaRef, ventaConPasos);
+      await updateDoc(ventaRef, nuevaVenta);
       setVentas((prevVentas) =>
         prevVentas.map((venta) =>
-          venta.id === ventaEditar.id ? { ...venta, ...ventaConPasos } : venta
+          venta.id === ventaEditar.id ? { ...venta, ...nuevaVenta } : venta
         )
       );
       setVentaEditar(null);
     } else {
       try {
-        const docRef = await addDoc(collection(db, 'ventas'), ventaConPasos);
-        setVentas((prevVentas) => [...prevVentas, { id: docRef.id, ...ventaConPasos }]);
+        const docRef = await addDoc(collection(db, 'ventas'), nuevaVenta);
+        setVentas((prevVentas) => [...prevVentas, { id: docRef.id, ...nuevaVenta }]);
       } catch (error) {
         console.error('Error creating venta: ', error);
       }
@@ -113,8 +100,8 @@ const Ventas = () => {
           />
         </div>
       )}
-      {ventas.map((venta, index) => (
-        <div key={index} className="venta-card">
+      {ventas.map((venta) => (
+        <div key={venta.id} className="venta-card">
           <h3>{venta.modelo}</h3>
           <p>Tamaño: {venta.tamaño}</p>
           <p>Color: {venta.color}</p>

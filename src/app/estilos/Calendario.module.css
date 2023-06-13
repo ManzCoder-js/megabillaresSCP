@@ -1,7 +1,86 @@
+.calendar {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+.header button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 110px;
+  width: 110px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.cell:hover {
+  background-color: #f0f0f0;
+}
+
+.day {
+  font-size: 14px;
+}
+
 .eventMarker {
-    width: 6px;
-    height: 6px;
-    background-color: red;
-    border-radius: 50%;
-  }
-  
+  width: 4px;
+  height: 4px;
+  background-color: #ff0000;
+  border-radius: 50%;
+  margin-top: 2px;
+}
+
+.event {
+  background-color: #ff0000;
+  color: #fff;
+}
+
+.selected {
+  background-color: #d4d4d4;
+}
+
+.input-text {
+  margin-top: 10px;
+  padding: 5px;
+}
+
+.button {
+  margin-top: 10px;
+  padding: 5px 10px;
+}
+
+
+.button:hover {
+  background-color: #e0e0e0;
+}
+
+.today {
+  background-color: #e8e8e8;
+}
+.event {
+  background-color: #f5f5f5;
+  color: #333333;
+  font-weight: bold;
+}
