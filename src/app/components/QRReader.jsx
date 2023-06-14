@@ -82,11 +82,6 @@ const QRReader = ({ onScan, onClose }) => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <div style={{ position: 'absolute', top: '10px', right: '10px' }}>
-        <button onClick={onClose} style={{ padding: '10px 20px', fontSize: '16px', fontWeight: 'bold' }}>
-          Cerrar
-        </button>
-      </div>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
         <div style={{ position: 'relative', maxWidth: '90%' }}>
           {error && (

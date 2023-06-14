@@ -190,8 +190,6 @@ export default function Inventario() {
 
   return (
     <div className={styles.Inventory}>
-      <h1>Inventario</h1>
-      <h2>Categorías</h2>
       {editingInventory ? (
         <form className={styles.editCategoria} onSubmit={handleAddCategory}>
           <input
