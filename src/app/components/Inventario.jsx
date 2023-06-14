@@ -25,6 +25,7 @@ export default function Inventario() {
     detalles: ''
   });
   const [editingInventory, setEditingInventory] = useState(false);
+  const [editingMaterials, setEditMaterials] = useState(false);
   const [newCategory, setNewCategory] = useState({
     name: ''
   });
@@ -128,11 +129,15 @@ export default function Inventario() {
   const handleEditInventory = () => {
     setEditingInventory(true);
   };
-
+  const handleeditingMaterials = () => {
+    setEditMaterials(true);
+  };
   const handleCancelEditInventory = () => {
     setEditingInventory(false);
   };
-
+  const handleCanceleditingMaterial = () => {
+    setEditMaterials(false);
+  };
   const handleAddCategory = async (e) => {
     e.preventDefault();
 
@@ -207,6 +212,7 @@ export default function Inventario() {
       ) : (
         <button onClick={handleEditInventory}>Editar Inventario</button>
       )}
+      
       <div className={styles.barraCategorias}>
       {categories.map((category) => (
         
@@ -219,6 +225,7 @@ export default function Inventario() {
 
       <h2>Materiales</h2>
       <div >
+        {editingMaterials ? (
           <form onSubmit={handleAddMaterial}>
             <input
               type="text"
@@ -245,7 +252,13 @@ export default function Inventario() {
               }
             />
             <button type="submit">Agregar Material</button>
+            <button onClick={handleCanceleditingMaterial}>Cancelar</button>
+
           </form>
+        ) : (
+          <button onClick={handleeditingMaterials}>Agregar Material</button>
+
+        )}
           </div>
 
       {selectedCategory && (
