@@ -27,18 +27,21 @@ const QRReader = ({ onScan, onClose }) => {
 
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d', { alpha: false });
 
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    const code = jsQR(imageData.data, imageData.width, imageData.height);
+    if (canvas) {
+      const context = canvas.getContext('2d', { alpha: false });
 
-    if (code) {
-      onScan(code.data);
-      setScanning(false);
-      setCodeDetected(true);
-    } else {
-      setError('No QR Code found');
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+      const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+      if (code) {
+        onScan(code.data);
+        setScanning(false);
+        setCodeDetected(true);
+      } else {
+        setError('No QR Code found');
+      }
     }
   };
 
@@ -67,9 +70,14 @@ const QRReader = ({ onScan, onClose }) => {
   };
 
   const handleLoadedData = () => {
+    const video = videoRef.current;
     const canvas = canvasRef.current;
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
+    if (canvas && video) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext('2d', { alpha: false });
+      // Use the context here or in the scanQRCode function
+    }
   };
 
   return (
@@ -102,7 +110,9 @@ const QRReader = ({ onScan, onClose }) => {
             onPause={() => setCodeDetected(false)}
             autoPlay
           />
-          <canvas ref={canvasRef} style={{ display: 'none' }} />
+          {videoRef.current && (
+            <canvas ref={canvasRef} style={{ display: 'none' }} />
+          )}
           {codeDetected && (
             <div
               style={{

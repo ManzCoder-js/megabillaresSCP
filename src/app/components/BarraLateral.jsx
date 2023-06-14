@@ -12,6 +12,7 @@ const Sidebar = ({ setOpcionSeleccionada }) => {
         <button className={styles.opcion} onClick={() => handleOptionClick('compras')}>Compras</button>
         <button className={styles.opcion} onClick={() => handleOptionClick('ventas')}>Ventas</button>
         <button className={styles.opcion} onClick={() => handleOptionClick('produccion')}>Producción</button>
+        <button className={styles.opcion} onClick={() => handleOptionClick('LectorQR')}>LectorQR</button>
       </aside>
     );
   };

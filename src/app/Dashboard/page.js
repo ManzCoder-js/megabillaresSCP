@@ -8,6 +8,7 @@ import Calendario from "../components/Calendario";
 import Compras from "../components/Compras";
 import Ventas from "../components/Ventas";
 import Produccion from "../components/Produccion";
+import QRReader from "../components/QRReader";
 
 
 export default function Dashboard(){
@@ -19,6 +20,7 @@ export default function Dashboard(){
         compras: <Compras />,
         ventas: <Ventas />,
         produccion: <Produccion />,
+        LectorQR: <QRReader onScan={setOpcionSeleccionada} />
       };
     return(
         <PrivateRoute>

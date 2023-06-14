@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import jsQR from 'jsqr';
 
-const QRReader = () => {
+const QrReader = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [scanning, setScanning] = useState(true);
@@ -81,4 +81,4 @@ const QRReader = () => {
   );
 };
 
-export default QRReader;
+export default QrReader;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import QRCode from 'qrcode.react';
 import {
   collection,
   query,
@@ -10,6 +11,7 @@ import {
   doc
 } from 'firebase/firestore';
 import { db } from './firebase';
+import styles from '../estilos/Inventario.module.css';
 
 export default function Inventory() {
   const [newMaterialCategory, setNewMaterialCategory] = useState('');
@@ -73,7 +75,12 @@ export default function Inventory() {
     setEditMaterial(material);
   };
 
-  const handleUpdateMaterial = async (materialId, updatedName, updatedQuantity, updatedDetails) => {
+  const handleUpdateMaterial = async (
+    materialId,
+    updatedName,
+    updatedQuantity,
+    updatedDetails
+  ) => {
     try {
       const materialRef = doc(
         db,
@@ -89,12 +96,14 @@ export default function Inventory() {
       });
       setMaterials((prevMaterials) =>
         prevMaterials.map((material) =>
-          material.id === materialId ? {
-            ...material,
-            nombre: updatedName,
-            cantidad: updatedQuantity,
-            detalles: updatedDetails
-          } : material
+          material.id === materialId
+            ? {
+                ...material,
+                nombre: updatedName,
+                cantidad: updatedQuantity,
+                detalles: updatedDetails
+              }
+            : material
         )
       );
       setEditMaterial(null);
@@ -165,9 +174,13 @@ export default function Inventory() {
         collection(db, 'categorias', selectedCategory, 'materiales'),
         material
       );
+
+      const qrCodeContent = `${material.nombre}, ${selectedCategory}`;
+      const qrCodeDataURL = await QRCode.toDataURL(qrCodeContent);
+
       setMaterials((prevMaterials) => [
         ...prevMaterials,
-        { id: docRef.id, ...material }
+        { id: docRef.id, ...material, qrCodeDataURL }
       ]);
       setNewMaterial({ name: '', quantity: '', details: '' });
     } catch (error) {
@@ -176,16 +189,15 @@ export default function Inventory() {
   };
 
   return (
-    <div>
+    <div className={styles.Inventory}>
       <h1>Inventario</h1>
 
       <h2>Categorías</h2>
       {categories.map((category) => (
-        <div key={category.id}>
-          <button onClick={() => setSelectedCategory(category.id)}>
+        
+          <button key={category.id} onClick={() => setSelectedCategory(category.id)}>
             {category.nombre}
-          </button>
-        </div>
+           </button>
       ))}
       {editingInventory ? (
         <form onSubmit={handleAddCategory}>
@@ -204,7 +216,7 @@ export default function Inventory() {
       )}
 
       {selectedCategory && (
-        <div>
+        <div className={styles.materiales}>
           <h2>Materiales</h2>
           {materials.length > 0 ? (
             materials.map((material) =>
@@ -254,30 +266,28 @@ export default function Inventory() {
                   </button>
                 </div>
               ) : (
-                <div key={material.id}>
+                <div className={styles.materialCard} key={material.id}>
                   <p>{material.nombre}</p>
                   <p>Cantidad: {material.cantidad}</p>
                   <p>Detalles: {material.detalles}</p>
-                  <div>
-                    <button onClick={() => handleEditMaterial(material)}>
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => handleDeleteMaterial(material.id)}
-                    >
-                      Eliminar
-                    </button>
-                  </div>
+                  <button onClick={() => handleEditMaterial(material)}>
+                    Editar
+                  </button>
+                  <button onClick={() => handleDeleteMaterial(material.id)}>
+                    Eliminar
+                  </button>
+                  <QRCode value={`${material.nombre}, ${selectedCategory}`} />
                 </div>
               )
             )
           ) : (
-            <p>No hay materiales disponibles.</p>
+            <p>No hay materiales en esta categoría.</p>
           )}
+          <div>
           <form onSubmit={handleAddMaterial}>
             <input
               type="text"
-              placeholder="Nombre"
+              placeholder="Nombre del material"
               value={newMaterial.name}
               onChange={(e) =>
                 setNewMaterial({ ...newMaterial, name: e.target.value })
@@ -301,8 +311,9 @@ export default function Inventory() {
             />
             <button type="submit">Agregar Material</button>
           </form>
+          </div>
         </div>
       )}
     </div>
   );
-}
+            }
