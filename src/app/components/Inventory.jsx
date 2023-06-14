@@ -191,7 +191,7 @@ export default function Inventory() {
   return (
     <div className={styles.Inventory}>
       <h1>Inventario</h1>
-
+      <div className={styles.barraCategorias}>
       <h2>Categorías</h2>
       {categories.map((category) => (
         
@@ -199,6 +199,7 @@ export default function Inventory() {
             {category.nombre}
            </button>
       ))}
+     
       {editingInventory ? (
         <form onSubmit={handleAddCategory}>
           <input
@@ -214,11 +215,42 @@ export default function Inventory() {
       ) : (
         <button onClick={handleEditInventory}>Editar Inventario</button>
       )}
+      </div>
+      <h2>Materiales</h2>
+      <div >
+          <form onSubmit={handleAddMaterial}>
+            <input
+              type="text"
+              placeholder="Nombre del material"
+              value={newMaterial.name}
+              onChange={(e) =>
+                setNewMaterial({ ...newMaterial, name: e.target.value })
+              }
+            />
+            <input
+              type="text"
+              placeholder="Cantidad"
+              value={newMaterial.quantity}
+              onChange={(e) =>
+                setNewMaterial({ ...newMaterial, quantity: e.target.value })
+              }
+            />
+            <input
+              type="text"
+              placeholder="Detalles"
+              value={newMaterial.details}
+              onChange={(e) =>
+                setNewMaterial({ ...newMaterial, details: e.target.value })
+              }
+            />
+            <button type="submit">Agregar Material</button>
+          </form>
+          </div>
 
       {selectedCategory && (
         <div className={styles.materiales}>
-          <h2>Materiales</h2>
-          {materials.length > 0 ? (
+
+          {(
             materials.map((material) =>
               material.id === editMaterial?.id ? (
                 <div key={material.id}>
@@ -280,40 +312,11 @@ export default function Inventory() {
                 </div>
               )
             )
-          ) : (
-            <p>No hay materiales en esta categoría.</p>
-          )}
-          <div>
-          <form onSubmit={handleAddMaterial}>
-            <input
-              type="text"
-              placeholder="Nombre del material"
-              value={newMaterial.name}
-              onChange={(e) =>
-                setNewMaterial({ ...newMaterial, name: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              placeholder="Cantidad"
-              value={newMaterial.quantity}
-              onChange={(e) =>
-                setNewMaterial({ ...newMaterial, quantity: e.target.value })
-              }
-            />
-            <input
-              type="text"
-              placeholder="Detalles"
-              value={newMaterial.details}
-              onChange={(e) =>
-                setNewMaterial({ ...newMaterial, details: e.target.value })
-              }
-            />
-            <button type="submit">Agregar Material</button>
-          </form>
-          </div>
+          ) }
+          
         </div>
       )}
+      
     </div>
   );
             }
