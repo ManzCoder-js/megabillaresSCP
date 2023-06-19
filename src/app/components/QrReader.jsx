@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import jsQR from 'jsqr';
 
-const QrReader = () => {
+const QRReader = () => {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [scanning, setScanning] = useState(true);
   const [qrCodeData, setQRCodeData] = useState('');
   const [error, setError] = useState('');
+
+
 
   useEffect(() => {
     const video = videoRef.current;
@@ -56,7 +58,7 @@ const QrReader = () => {
         stream.getTracks().forEach((track) => track.stop()); // Detener la cámara
       }
     };
-  }, []); // Eliminar 'scanning' como dependencia
+  }, [scanning]); // Eliminar 'scanning' como dependencia
 
   const toggleScanning = () => {
     setScanning(!scanning);
@@ -70,6 +72,7 @@ const QrReader = () => {
 
   return (
     <div>
+      <button onClick={toggleScanning}>close</button>
       <video ref={videoRef} width='100%' height='100%' onLoadedData={handleLoadedData} autoPlay/>
       <canvas ref={canvasRef} style={{ display: 'none' }} />
       {qrCodeData && (
@@ -81,4 +84,4 @@ const QrReader = () => {
   );
 };
 
-export default QrReader;
+export default QRReader;

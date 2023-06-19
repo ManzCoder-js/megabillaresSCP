@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { updateDoc, doc } from 'firebase/firestore';
 import { db } from './firebase';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const MesasDeBillar = ({ ventaEditar, onSeleccion, onCancel }) => {
   const [modelo, setModelo] = useState(ventaEditar ? ventaEditar.modelo : '');
@@ -8,7 +10,7 @@ const MesasDeBillar = ({ ventaEditar, onSeleccion, onCancel }) => {
   const [color, setColor] = useState(ventaEditar ? ventaEditar.color : '');
   const [acabado, setAcabado] = useState(ventaEditar ? ventaEditar.acabado : '');
   const [cliente, setCliente] = useState(ventaEditar ? ventaEditar.cliente : '');
-  const [fechaEntrega, setFechaEntrega] = useState(ventaEditar ? ventaEditar.fechaEntrega : '');
+  const [fechaEntrega, setFechaEntrega] = useState(ventaEditar ? ventaEditar.fechaEntrega.toDate() : new Date());
   const [detallesMesa, setDetallesMesa] = useState(ventaEditar ? ventaEditar.detallesMesa : '');
   const [pasosProduccion, setPasosProduccion] = useState(
     ventaEditar ? ventaEditar.pasosProduccion : [
@@ -72,25 +74,13 @@ const MesasDeBillar = ({ ventaEditar, onSeleccion, onCancel }) => {
       </label>
       <label>
         Fecha de Entrega:
-        <input type="text" value={fechaEntrega} onChange={(e) => setFechaEntrega(e.target.value)} />
+        <DatePicker selected={fechaEntrega} onChange={(date) => setFechaEntrega(date)} />
       </label>
       <label>
         Detalles de la Mesa:
         <textarea value={detallesMesa} onChange={(e) => setDetallesMesa(e.target.value)} />
       </label>
-      <h4>Pasos de Producción:</h4>
-      {pasosProduccion.map((paso, index) => (
-        <div key={index}>
-          <label>
-            {paso.nombre}:
-            <select value={paso.estado} onChange={(e) => handlePasoChange(index, e)}>
-              <option value="Pendiente">Pendiente</option>
-              <option value="En Proceso">En Proceso</option>
-              <option value="Completado">Completado</option>
-            </select>
-          </label>
-        </div>
-      ))}
+     
       <button type="submit">{ventaEditar ? 'Actualizar' : 'Guardar'}</button>
       <button type="button" onClick={onCancel}>Cancelar</button>
     </form>

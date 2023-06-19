@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs } from 'firebase/firestore';
 import { db } from './firebase';
+import { serverTimestamp } from 'firebase/firestore';
 import MesasDeBillar from './MesasDeBillar';
 
 const Ventas = () => {
@@ -22,22 +23,6 @@ const Ventas = () => {
     fetchVentas();
   }, []);
 
-  useEffect(() => {
-    const saveVentas = async () => {
-      try {
-        const ventasCollection = collection(db, 'ventas');
-        await deleteDocs(ventasCollection); // Elimina todas las ventas existentes en Firebase antes de guardar las nuevas
-        ventas.forEach(async (venta) => {
-          await addDoc(ventasCollection, venta);
-        });
-      } catch (error) {
-        console.error('Error saving ventas: ', error);
-      }
-    };
-
-    saveVentas();
-  }, [ventas]);
-
   const handleCrearVenta = async (nuevaVenta) => {
     if (ventaEditar) {
       const ventaRef = doc(db, 'ventas', ventaEditar.id);
@@ -50,8 +35,38 @@ const Ventas = () => {
       setVentaEditar(null);
     } else {
       try {
-        const docRef = await addDoc(collection(db, 'ventas'), nuevaVenta);
-        setVentas((prevVentas) => [...prevVentas, { id: docRef.id, ...nuevaVenta }]);
+        if (!nuevaVenta.fechaEntrega || nuevaVenta.cliente === '') {
+          console.error('Error creating venta: Campos obligatorios no completados');
+          return;
+        }
+
+        // Crear el evento en la colección "eventos"
+        const newEvent = {
+          activity: nuevaVenta.cliente,
+          date: nuevaVenta.fechaEntrega,
+          timestamp: serverTimestamp(),
+        };
+
+        const eventosCollection = collection(db, 'eventos');
+        const eventDocRef = await addDoc(eventosCollection, newEvent);
+        const eventId = eventDocRef.id;
+
+        // Crear la venta en la colección "ventas"
+        const newVenta = {
+          modelo: nuevaVenta.modelo,
+          tamaño: nuevaVenta.tamaño,
+          color: nuevaVenta.color,
+          acabado: nuevaVenta.acabado,
+          cliente: nuevaVenta.cliente,
+          fechaEntrega: nuevaVenta.fechaEntrega,
+          detallesMesa: nuevaVenta.detallesMesa,
+          pasosProduccion: nuevaVenta.pasosProduccion,
+          eventoId: eventId,
+        };
+
+        const ventasCollection = collection(db, 'ventas');
+        const ventaDocRef = await addDoc(ventasCollection, newVenta);
+        setVentas((prevVentas) => [...prevVentas, { id: ventaDocRef.id, ...newVenta }]);
       } catch (error) {
         console.error('Error creating venta: ', error);
       }
@@ -69,10 +84,21 @@ const Ventas = () => {
       const ventaRef = doc(db, 'ventas', venta.id);
       await deleteDoc(ventaRef);
       setVentas((prevVentas) => prevVentas.filter((v) => v.id !== venta.id));
+      await eliminarEvento(venta.eventoId); // Eliminar el evento asociado
     } catch (error) {
       console.error('Error deleting venta: ', error);
     }
   };
+  
+  const eliminarEvento = async (eventoId) => {
+    try {
+      const eventoRef = doc(db, 'eventos', eventoId);
+      await deleteDoc(eventoRef);
+    } catch (error) {
+      console.error('Error deleting evento: ', error);
+    }
+  };
+  
 
   const handleMostrarMesasDeBillar = () => {
     setVentaEditar(null);
