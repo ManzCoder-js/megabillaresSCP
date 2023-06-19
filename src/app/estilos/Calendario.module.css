@@ -109,3 +109,62 @@
   margin: 5px;
   padding: 5px;
 }
+/* Estilos generales */
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 767px) {
+  .calendar {
+    width: 100%;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+  }
+
+  .header button {
+    font-size: 14px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+  }
+
+  .cell {
+    height: 50px;
+    width: 50px;
+  }
+
+  .day {
+    font-size: 12px;
+  }
+
+  .input-text {
+    margin-top: 5px;
+    padding: 3px;
+    font-size: 12px;
+  }
+
+  .button {
+    margin-top: 5px;
+    padding: 3px 6px;
+    font-size: 12px;
+  }
+
+  .eventMarker {
+    width: 3px;
+    height: 3px;
+    margin-top: 1px;
+  }
+
+  .evento {
+    margin: 3px;
+    padding: 3px;
+    font-size: 12px;
+  }
+
+  /* Resto de los estilos para dispositivos móviles */
+}
+
