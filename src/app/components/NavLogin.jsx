@@ -42,8 +42,8 @@ function NavLogin() {
       {authContext && authContext.user ? (
         <div className={styles.userProfile}>
           <Link href="/Dashboard">
-            <div className={styles.profilePicture}>
               <Image
+                className={styles.profilePicture}
                 loading="lazy" // Mejora la carga inicial de la imagen
                 width={40}
                 height={40}
@@ -53,7 +53,6 @@ function NavLogin() {
                   e.target.src = '/default-profile-picture.jpg'; // Manejo de errores de carga de la imagen
                 }}
               />
-            </div>
           </Link>
           <div className={styles.userName}>{authContext.user.displayName}</div>
           <button className={styles.btn} onClick={logout}>
